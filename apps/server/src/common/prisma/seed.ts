@@ -4,7 +4,7 @@ import * as bcrypt from 'bcrypt'
 const prisma = new PrismaClient()
 
 async function main() {
-  const superAdminEmail = 'superadmin@example.com' // Change this to your preferred email
+  const superAdminEmail = process.env.SUPER_ADMIN_EMAIL
 
   // Check if a super admin already exists
   const existingSuperAdmin = await prisma.user.findFirst({
@@ -12,7 +12,7 @@ async function main() {
   })
 
   if (!existingSuperAdmin) {
-    const password = await bcrypt.hash('supersecretpassword', 10) // Replace with secure password
+    const password = await bcrypt.hash(process.env.SUPER_ADMIN_PASSWORD, 10)
 
     await prisma.user.create({
       data: {
