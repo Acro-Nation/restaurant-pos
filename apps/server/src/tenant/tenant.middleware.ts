@@ -15,21 +15,22 @@ export class TenantMiddleware implements NestMiddleware {
   ) {}
 
   async use(req: Request, res: Response, next: NextFunction) {
-    const authHeader = req.headers['authorization']
+    const token = req.cookies['accessToken']
+    console.log('Incoming request token:', token)
 
-    if (!authHeader) {
-      throw new UnauthorizedException('Authorization header is missing')
+    if (!token) {
+      throw new UnauthorizedException('Access token is missing')
     }
 
-    const token = authHeader.split(' ')[1]
-
     try {
-      const decoded = this.jwtService.verify(token)
+      const decoded = this.jwtService.verify(token, {
+        secret: process.env.JWT_SECRET,
+      })
       const userId = decoded.sub
       const tenantId = decoded.tenantId
 
-      // Fetch user to validate tenant
       const user = await this.userService.findOne(userId)
+      console.log('User:', user)
       if (!user || user.tenantId !== tenantId) {
         throw new UnauthorizedException('Invalid tenant access')
       }
@@ -37,7 +38,7 @@ export class TenantMiddleware implements NestMiddleware {
       req['user'] = user
       next()
     } catch (error) {
-      throw new UnauthorizedException('Invalid token')
+      throw new UnauthorizedException('Invalid access token')
     }
   }
 }

@@ -14,3 +14,10 @@ export class EventPayloads {
 }
 
 export const PUB_SUB = 'PUB_SUB'
+
+export interface JwtPayload {
+  sub: string // user ID
+  email: string
+  role: string
+  tenantId: string
+}

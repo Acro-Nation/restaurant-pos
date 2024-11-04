@@ -1,4 +1,9 @@
-import { Injectable } from '@nestjs/common'
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+  ConflictException,
+} from '@nestjs/common'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import * as bcrypt from 'bcrypt'
 import { User } from 'src/common/entities/user.entity'
@@ -8,7 +13,6 @@ import { UserRole } from 'src/common/interfaces/config'
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
-  // Add mapper function
   private mapPrismaUserToGraphQL(prismaUser: any): User {
     return {
       id: prismaUser.id,
@@ -32,23 +36,48 @@ export class UserService {
     return user ? this.mapPrismaUserToGraphQL(user) : null
   }
 
+  async findAll(): Promise<User[]> {
+    const users = await this.prisma.user.findMany()
+    return users.map(this.mapPrismaUserToGraphQL)
+  }
+
   async create(data: {
     name: string
     email: string
     password: string
-    role: UserRole // Change this type from string to UserRole
+    role: UserRole
     tenantId: string // Keep this for the input, but not in data directly.
   }): Promise<User> {
+    // Check if user already exists
+    const existingUser = await this.findByEmail(data.email)
+    if (existingUser) {
+      throw new ConflictException('Email already in use')
+    }
+
     const hashedPassword = await bcrypt.hash(data.password, 10)
     const user = await this.prisma.user.create({
       data: {
         name: data.name,
         email: data.email,
         password: hashedPassword,
-        role: data.role as UserRole, // Add type assertion if needed
+        role: data.role as UserRole,
         tenant: { connect: { id: data.tenantId } }, // Connect the tenant relation
       },
     })
     return this.mapPrismaUserToGraphQL(user)
+  }
+
+  async validateCredentials(email: string, password: string) {
+    const user = await this.prisma.user.findUnique({ where: { email } })
+    if (!user) {
+      throw new NotFoundException('User not found')
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password)
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Invalid credentials')
+    }
+
+    return user
   }
 }

@@ -1,7 +1,12 @@
 import { ObjectType, Field } from '@nestjs/graphql'
 
 @ObjectType()
-export class AuthResponse {
+export class LoginResponse {
   @Field()
-  accessToken: string
+  message: string
+}
+@ObjectType()
+export class RefreshTokenResponse {
+  @Field()
+  message: string
 }

@@ -23,10 +23,3 @@ registerEnumType(UserRole, {
   name: 'UserRole', // This name should match GraphQL's schema
   description: 'The roles a user can have in the system',
 })
-
-export interface JwtPayload {
-  sub: string // user ID
-  email: string
-  role: string
-  tenantId: string
-}
