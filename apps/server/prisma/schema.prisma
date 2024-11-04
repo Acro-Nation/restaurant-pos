@@ -1,0 +1,117 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // Base database connection for super admin
+}
+
+model Tenant {
+  id            String         @id @default(uuid())
+  name          String         @unique
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  users         User[] // Relation to users of the tenant
+  restaurants   Restaurant[] // Relation to restaurants in the tenant
+  subscriptions Subscription[] // Relation to subscriptions in the tenant
+}
+
+model Restaurant {
+  id        String   @id @default(uuid())
+  name      String
+  address   String
+  tenantId  String   // Foreign key to Tenant
+  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+
+  // Admin relation defined here
+  adminId   String?  @unique
+  admin     User?    @relation("RestaurantAdmin", fields: [adminId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orders    Order[]  // Relation to orders for this restaurant
+
+  managers  User[]   @relation("Manager") // Additional managers
+  waiters   User[]   @relation("Waiter")  // Waiters for this restaurant
+  chefs     User[]   @relation("Chef")    // Chefs for this restaurant
+}
+
+model User {
+  id                 String       @id @default(uuid())
+  name               String
+  email              String       @unique
+  password           String
+  role               UserRole
+  tenantId          String       // Foreign key to Tenant
+  tenant            Tenant       @relation(fields: [tenantId], references: [id])
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  // Relationships for restaurant roles
+  ordersAsWaiter    Order[]      @relation("WaiterOrders")
+  ordersAsChef      Order[]      @relation("ChefOrders")
+  managedRestaurants Restaurant[] @relation("Manager")
+  waitingRestaurants Restaurant[] @relation("Waiter")
+  chefRestaurants    Restaurant[] @relation("Chef")
+
+  // Relation to restaurant as primary admin (one-to-one)
+  adminOfRestaurant Restaurant?  @relation("RestaurantAdmin")
+}
+
+
+model Subscription {
+  id                 String             @id @default(uuid())
+  tenantId           String // Foreign key to Tenant
+  tenant             Tenant             @relation(fields: [tenantId], references: [id]) // Reverse relation
+  startDate          DateTime
+  endDate            DateTime
+  status             SubscriptionStatus
+  billingCycle       BillingCycle
+  costPerMonth       Float
+  orderPercentageFee Float
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+}
+
+model Order {
+  id           String      @id @default(uuid())
+  restaurantId String
+  waiterId     String
+  chefId       String?
+  amount       Float
+  status       OrderStatus
+  createdAt    DateTime    @default(now())
+  completedAt  DateTime?
+  restaurant   Restaurant  @relation(fields: [restaurantId], references: [id])
+  waiter       User        @relation(name: "WaiterOrders", fields: [waiterId], references: [id])
+  chef         User?       @relation(name: "ChefOrders", fields: [chefId], references: [id])
+  tenantId     String
+}
+
+// Role and Status Enums
+enum UserRole {
+  SUPER_ADMIN
+  RESTAURANT_ADMIN
+  MANAGER
+  WAITER
+  CHEF
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  INACTIVE
+  CANCELLED
+}
+
+enum BillingCycle {
+  MONTHLY
+  ANNUALLY
+}
+
+enum OrderStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
