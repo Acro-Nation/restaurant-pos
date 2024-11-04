@@ -10,6 +10,9 @@ import { AppResolver } from './app.resolver'
 import { AppService } from './app.service'
 import { TenantMiddleware } from './tenant/tenant.middleware'
 import { RestaurantModule } from './restaurant/restaurant.module'
+import { UserModule } from './user/user.module'
+import { AuthModule } from './auth/auth.module'
+import { JwtService } from '@nestjs/jwt'
 
 @Module({
   imports: [
@@ -29,11 +32,13 @@ import { RestaurantModule } from './restaurant/restaurant.module'
       context: ({ req, res }) => ({ req, res }), // Pass request context for middleware
       path: '/api/v1',
     }),
+    AuthModule,
+    UserModule,
     RestaurantModule,
     PrismaModule,
     TenantModule,
   ],
-  providers: [AppService, AppResolver],
+  providers: [AppService, AppResolver, JwtService],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

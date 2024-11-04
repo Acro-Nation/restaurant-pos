@@ -3,29 +3,41 @@ import {
   NestMiddleware,
   UnauthorizedException,
 } from '@nestjs/common'
-import { Request, Response, NextFunction } from 'express'
-import { PrismaService } from 'src/common/prisma/prisma.service'
+import { NextFunction, Request, Response } from 'express'
+import { JwtService } from '@nestjs/jwt'
+import { UserService } from '../user/user.service'
 
 @Injectable()
 export class TenantMiddleware implements NestMiddleware {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private jwtService: JwtService,
+    private userService: UserService,
+  ) {}
 
   async use(req: Request, res: Response, next: NextFunction) {
-    const tenantId = req.headers['tenant-id']
+    const authHeader = req.headers['authorization']
 
-    if (!tenantId || typeof tenantId !== 'string') {
-      throw new UnauthorizedException('No tenant ID provided')
+    if (!authHeader) {
+      throw new UnauthorizedException('Authorization header is missing')
     }
 
-    const tenant = await this.prisma.tenant.findUnique({
-      where: { id: tenantId },
-    })
+    const token = authHeader.split(' ')[1]
 
-    if (!tenant) {
-      throw new UnauthorizedException('Invalid tenant')
+    try {
+      const decoded = this.jwtService.verify(token)
+      const userId = decoded.sub
+      const tenantId = decoded.tenantId
+
+      // Fetch user to validate tenant
+      const user = await this.userService.findOne(userId)
+      if (!user || user.tenantId !== tenantId) {
+        throw new UnauthorizedException('Invalid tenant access')
+      }
+
+      req['user'] = user
+      next()
+    } catch (error) {
+      throw new UnauthorizedException('Invalid token')
     }
-
-    req['tenantId'] = tenantId // Attach tenant ID to the request for later use
-    next()
   }
 }

@@ -44,14 +44,25 @@ type Restaurant {
   updatedAt: DateTime!
 }
 
+type AuthResponse {
+  accessToken: String!
+}
+
 type Query {
   getHello: String!
   tenants: [Tenant!]!
 }
 
 type Mutation {
+  login(loginDto: LoginDto!): AuthResponse!
+  createUser(name: String!, email: String!, password: String!, role: String!, tenantId: String!): User!
   createRestaurantWithOwner(tenantId: String!, restaurantData: CreateRestaurantInput!, ownerData: CreateOwnerInput!): Restaurant!
   createTenant(name: String!): Tenant!
+}
+
+input LoginDto {
+  email: String!
+  password: String!
 }
 
 input CreateRestaurantInput {

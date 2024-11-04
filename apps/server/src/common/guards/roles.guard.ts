@@ -4,8 +4,8 @@ import {
   ExecutionContext,
   ForbiddenException,
 } from '@nestjs/common'
-import { Reflector } from '@nestjs/core'
 import { GqlExecutionContext } from '@nestjs/graphql'
+import { Reflector } from '@nestjs/core'
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -21,7 +21,7 @@ export class RolesGuard implements CanActivate {
     const ctx = GqlExecutionContext.create(context)
     const { user } = ctx.getContext().req
 
-    if (!user || !requiredRoles.includes(user.role)) {
+    if (!requiredRoles.includes(user.role)) {
       throw new ForbiddenException('Insufficient permissions')
     }
 
