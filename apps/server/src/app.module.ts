@@ -5,7 +5,6 @@ import { ConfigModule } from '@nestjs/config'
 import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { JwtService } from '@nestjs/jwt'
-import { APP_GUARD } from '@nestjs/core'
 
 import { PrismaModule } from './common/prisma/prisma.module'
 import { TenantModule } from './tenant/tenant.module'
