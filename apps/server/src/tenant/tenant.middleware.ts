@@ -16,7 +16,6 @@ export class TenantMiddleware implements NestMiddleware {
 
   async use(req: Request, res: Response, next: NextFunction) {
     const token = req.cookies['accessToken']
-    console.log('Incoming request token:', token)
 
     if (!token) {
       throw new UnauthorizedException('Access token is missing')
@@ -30,12 +29,12 @@ export class TenantMiddleware implements NestMiddleware {
       const tenantId = decoded.tenantId
 
       const user = await this.userService.findOne(userId)
-      console.log('User:', user)
       if (!user || user.tenantId !== tenantId) {
         throw new UnauthorizedException('Invalid tenant access')
       }
 
       req['user'] = user
+      req['tenantId'] = tenantId
       next()
     } catch (error) {
       throw new UnauthorizedException('Invalid access token')

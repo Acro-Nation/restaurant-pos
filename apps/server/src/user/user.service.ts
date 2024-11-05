@@ -36,8 +36,13 @@ export class UserService {
     return user ? this.mapPrismaUserToGraphQL(user) : null
   }
 
-  async findAll(): Promise<User[]> {
-    const users = await this.prisma.user.findMany()
+  async findAll(user: User): Promise<User[]> {
+    const users = await this.prisma.user.findMany({
+      where: {
+        tenantId: user.tenantId,
+        id: { not: user.id }, // Exclude current user
+      },
+    })
     return users.map(this.mapPrismaUserToGraphQL)
   }
 
@@ -46,7 +51,8 @@ export class UserService {
     email: string
     password: string
     role: UserRole
-    tenantId: string // Keep this for the input, but not in data directly.
+    tenantId: string
+    restaurantId?: string
   }): Promise<User> {
     // Check if user already exists
     const existingUser = await this.findByEmail(data.email)
@@ -55,15 +61,23 @@ export class UserService {
     }
 
     const hashedPassword = await bcrypt.hash(data.password, 10)
+
+    const roleConnections = this.getRoleConnections(
+      data.role,
+      data.restaurantId,
+    )
+
     const user = await this.prisma.user.create({
       data: {
         name: data.name,
         email: data.email,
         password: hashedPassword,
-        role: data.role as UserRole,
-        tenant: { connect: { id: data.tenantId } }, // Connect the tenant relation
+        role: data.role,
+        tenant: { connect: { id: data.tenantId } },
+        ...roleConnections,
       },
     })
+
     return this.mapPrismaUserToGraphQL(user)
   }
 
@@ -79,5 +93,22 @@ export class UserService {
     }
 
     return user
+  }
+
+  private getRoleConnections(role: UserRole, restaurantId?: string) {
+    if (!restaurantId) return {}
+
+    switch (role) {
+      case UserRole.MANAGER:
+        return { managedRestaurants: { connect: { id: restaurantId } } }
+      case UserRole.WAITER:
+        return { waitingRestaurants: { connect: { id: restaurantId } } }
+      case UserRole.CHEF:
+        return { chefRestaurants: { connect: { id: restaurantId } } }
+      case UserRole.RESTAURANT_ADMIN:
+        return { adminOfRestaurant: { connect: { id: restaurantId } } }
+      default:
+        return {}
+    }
   }
 }

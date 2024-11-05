@@ -1,9 +1,12 @@
 import * as Joi from 'joi'
 import { join } from 'path'
-import { Module, MiddlewareConsumer } from '@nestjs/common'
+import { Module, MiddlewareConsumer, RequestMethod } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
+import { JwtService } from '@nestjs/jwt'
+import { APP_GUARD } from '@nestjs/core'
+
 import { PrismaModule } from './common/prisma/prisma.module'
 import { TenantModule } from './tenant/tenant.module'
 import { AppResolver } from './app.resolver'
@@ -12,7 +15,6 @@ import { TenantMiddleware } from './tenant/tenant.middleware'
 import { RestaurantModule } from './restaurant/restaurant.module'
 import { UserModule } from './user/user.module'
 import { AuthModule } from './auth/auth.module'
-import { JwtService } from '@nestjs/jwt'
 
 @Module({
   imports: [
@@ -45,6 +47,6 @@ export class AppModule {
     consumer
       .apply(TenantMiddleware)
       .exclude('/api/v1/', '/api/v1/graphql', '/api/v1/graphql/playground')
-      .forRoutes('*') // Apply tenant middleware to all routes
+      .forRoutes({ path: '*', method: RequestMethod.ALL })
   }
 }

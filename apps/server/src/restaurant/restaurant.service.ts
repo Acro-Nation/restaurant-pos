@@ -74,4 +74,16 @@ export class RestaurantService {
     // Transform the Prisma result to match the GraphQL type
     return this.mapPrismaRestaurantToGraphQL(restaurant, restaurant.admin)
   }
+
+  async findAll(): Promise<Restaurant[]> {
+    const restaurants = await this.prisma.restaurant.findMany({
+      include: {
+        admin: true,
+      },
+    })
+
+    return restaurants.map((restaurant) =>
+      this.mapPrismaRestaurantToGraphQL(restaurant, restaurant.admin),
+    )
+  }
 }

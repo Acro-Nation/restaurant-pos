@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Args, Query } from '@nestjs/graphql'
+import { Resolver, Mutation, Args, Query, Context } from '@nestjs/graphql'
 import { UserService } from './user.service'
 import { Roles } from '../auth/roles.decorator'
 import { User } from 'src/common/entities/user.entity'
@@ -13,9 +13,9 @@ export class UserResolver {
 
   @Query(() => [User])
   @UseGuards(GqlAuthGuard, RolesGuard)
-  @Roles(UserRole.RESTAURANT_ADMIN) // Either a Restaurant Admin OR Super Admin can view all users
-  async getAllUsers(): Promise<User[]> {
-    return this.userService.findAll()
+  @Roles(UserRole.RESTAURANT_ADMIN) // Only Restaurant Admins can view all users
+  async getAllUsers(@Context() context: any): Promise<User[]> {
+    return this.userService.findAll(context.req.user)
   }
 
   @Mutation(() => User)
@@ -26,8 +26,16 @@ export class UserResolver {
     @Args('email') email: string,
     @Args('password') password: string,
     @Args('role', { type: () => UserRole }) role: UserRole,
-    @Args('tenantId') tenantId: string,
+    @Context() context: any,
   ): Promise<User> {
-    return this.userService.create({ name, email, password, role, tenantId })
+    const user = context.req.user
+    return this.userService.create({
+      name,
+      email,
+      password,
+      role,
+      tenantId: user.tenantId,
+      restaurantId: user.restaurantId,
+    })
   }
 }

@@ -55,14 +55,15 @@ type RefreshTokenResponse {
 type Query {
   getHello: String!
   getAllUsers: [User!]!
-  tenants: [Tenant!]!
+  getAllRestaurants: [Restaurant!]!
+  getAllTenants: [Tenant!]!
 }
 
 type Mutation {
   login(loginDto: LoginDto!): LoginResponse!
   refreshToken: RefreshTokenResponse!
   logout: String!
-  createUser(name: String!, email: String!, password: String!, role: UserRole!, tenantId: String!): User!
+  createUser(name: String!, email: String!, password: String!, role: UserRole!): User!
   createRestaurantWithOwner(tenantId: String!, restaurantData: CreateRestaurantInput!, ownerData: CreateOwnerInput!): Restaurant!
   createTenant(name: String!): Tenant!
 }
