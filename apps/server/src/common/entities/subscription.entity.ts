@@ -1,12 +1,21 @@
-import { Field, ObjectType, ID } from '@nestjs/graphql'
-import { SubscriptionStatus, BillingCycle } from '@prisma/client'
+// src/subscription/subscription.entity.ts
+import { ObjectType, Field, ID, registerEnumType } from '@nestjs/graphql'
+import { BillingCycle, SubscriptionStatus } from '@prisma/client'
+
+registerEnumType(SubscriptionStatus, {
+  name: 'SubscriptionStatus',
+})
+
+registerEnumType(BillingCycle, {
+  name: 'BillingCycle',
+})
 
 @ObjectType()
 export class Subscription {
   @Field(() => ID)
   id: string
 
-  @Field(() => String)
+  @Field()
   tenantId: string
 
   @Field()
@@ -15,10 +24,10 @@ export class Subscription {
   @Field()
   endDate: Date
 
-  @Field()
+  @Field(() => SubscriptionStatus)
   status: SubscriptionStatus
 
-  @Field()
+  @Field(() => BillingCycle)
   billingCycle: BillingCycle
 
   @Field()

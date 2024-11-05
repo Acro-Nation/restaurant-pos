@@ -1,5 +1,9 @@
-import { Field, ObjectType, ID } from '@nestjs/graphql'
+import { Field, ObjectType, ID, registerEnumType } from '@nestjs/graphql'
 import { OrderStatus } from '@prisma/client'
+
+registerEnumType(OrderStatus, {
+  name: 'OrderStatus',
+})
 
 @ObjectType()
 export class Order {

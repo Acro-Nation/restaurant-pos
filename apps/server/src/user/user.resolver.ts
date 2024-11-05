@@ -5,7 +5,7 @@ import { User } from 'src/common/entities/user.entity'
 import { GqlAuthGuard } from 'src/common/guards/gql-auth.guard'
 import { UseGuards } from '@nestjs/common'
 import { RolesGuard } from 'src/common/guards/roles.guard'
-import { UserRole } from 'src/common/interfaces/config'
+import { UserRole } from '@prisma/client'
 
 @Resolver(() => User)
 export class UserResolver {

@@ -6,7 +6,7 @@ import { UseGuards } from '@nestjs/common'
 import { GqlAuthGuard } from 'src/common/guards/gql-auth.guard'
 import { RolesGuard } from 'src/common/guards/roles.guard'
 import { Roles } from 'src/auth/roles.decorator'
-import { UserRole } from 'src/common/interfaces/config'
+import { UserRole } from '@prisma/client'
 
 @Resolver(() => Tenant)
 export class TenantResolver {

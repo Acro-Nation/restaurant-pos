@@ -14,6 +14,7 @@ import { TenantMiddleware } from './tenant/tenant.middleware'
 import { RestaurantModule } from './restaurant/restaurant.module'
 import { UserModule } from './user/user.module'
 import { AuthModule } from './auth/auth.module'
+import { SubscriptionModule } from './subscription/subscription.module'
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { AuthModule } from './auth/auth.module'
     RestaurantModule,
     PrismaModule,
     TenantModule,
+    SubscriptionModule,
   ],
   providers: [AppService, AppResolver, JwtService],
 })

@@ -9,7 +9,7 @@ import { RolesGuard } from 'src/common/guards/roles.guard'
 import { UseGuards } from '@nestjs/common'
 import { Roles } from 'src/auth/roles.decorator'
 import { GqlAuthGuard } from 'src/common/guards/gql-auth.guard'
-import { UserRole } from 'src/common/interfaces/config'
+import { UserRole } from '@prisma/client'
 
 @Resolver(() => Restaurant) // Define the resolver for the Restaurant type
 export class RestaurantResolver {

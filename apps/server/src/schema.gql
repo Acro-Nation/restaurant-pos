@@ -25,7 +25,6 @@ type User {
   updatedAt: DateTime!
 }
 
-"""The roles a user can have in the system"""
 enum UserRole {
   SUPER_ADMIN
   RESTAURANT_ADMIN
@@ -52,11 +51,36 @@ type RefreshTokenResponse {
   message: String!
 }
 
+type Subscription {
+  id: ID!
+  tenantId: String!
+  startDate: DateTime!
+  endDate: DateTime!
+  status: SubscriptionStatus!
+  billingCycle: BillingCycle!
+  costPerMonth: Float!
+  orderPercentageFee: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  INACTIVE
+  CANCELLED
+}
+
+enum BillingCycle {
+  MONTHLY
+  ANNUALLY
+}
+
 type Query {
   getHello: String!
   getAllUsers: [User!]!
   getAllRestaurants: [Restaurant!]!
   getAllTenants: [Tenant!]!
+  getSubscriptions(tenantId: String!): [Subscription!]!
 }
 
 type Mutation {
@@ -66,6 +90,8 @@ type Mutation {
   createUser(name: String!, email: String!, password: String!, role: UserRole!): User!
   createRestaurantWithOwner(tenantId: String!, restaurantData: CreateRestaurantInput!, ownerData: CreateOwnerInput!): Restaurant!
   createTenant(name: String!): Tenant!
+  updateSubscriptionStatus(subscriptionId: String!, status: String!): Subscription!
+  deleteSubscription(subscriptionId: String!): Subscription!
 }
 
 input LoginDto {

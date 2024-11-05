@@ -7,7 +7,7 @@ import {
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import * as bcrypt from 'bcrypt'
 import { User } from 'src/common/entities/user.entity'
-import { UserRole } from 'src/common/interfaces/config'
+import { UserRole } from '@prisma/client'
 
 @Injectable()
 export class UserService {

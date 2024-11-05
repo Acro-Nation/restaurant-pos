@@ -6,9 +6,9 @@ import {
   CreateOwnerInput,
   CreateRestaurantInput,
 } from './dto/create-restaurant.input'
-import { UserRole } from 'src/common/interfaces/config'
 import { Restaurant } from 'src/common/entities/restaurant.entity'
 import { User } from 'src/common/entities/user.entity'
+import { UserRole } from '@prisma/client'
 
 @Injectable()
 export class RestaurantService {

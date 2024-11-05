@@ -1,5 +1,5 @@
 import { InputType, Field } from '@nestjs/graphql'
-import { UserRole } from 'src/common/interfaces/config'
+import { UserRole } from '@prisma/client'
 
 @InputType()
 export class CreateRestaurantInput {
