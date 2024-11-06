@@ -47,6 +47,7 @@ model User {
   tenant            Tenant       @relation(fields: [tenantId], references: [id])
   createdAt         DateTime     @default(now())
   updatedAt         DateTime     @updatedAt
+ 
 
   // Relationships for restaurant roles
   ordersAsWaiter    Order[]      @relation("WaiterOrders")
@@ -87,6 +88,16 @@ model Order {
   waiter       User        @relation(name: "WaiterOrders", fields: [waiterId], references: [id])
   chef         User?       @relation(name: "ChefOrders", fields: [chefId], references: [id])
   tenantId     String
+}
+
+
+model Product {
+  id        String   @id @default(uuid())
+  title      String
+  price     Int
+  description String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // Role and Status Enums
