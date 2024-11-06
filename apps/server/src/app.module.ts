@@ -39,7 +39,9 @@ import { ProductModule } from './product/product.module'
     RestaurantModule,
     PrismaModule,
     TenantModule,
+
     SubscriptionModule,
+
     ProductModule,
   ],
   providers: [AppService, AppResolver, JwtService],
@@ -49,6 +51,7 @@ export class AppModule {
     consumer
       .apply(TenantMiddleware)
       .exclude('/api/v1/', '/api/v1/graphql', '/api/v1/graphql/playground')
+
       .forRoutes({ path: '*', method: RequestMethod.ALL })
   }
 }
