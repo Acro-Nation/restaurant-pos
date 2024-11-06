@@ -13,6 +13,7 @@ import { RestaurantModule } from './restaurant/restaurant.module'
 import { UserModule } from './user/user.module'
 import { AuthModule } from './auth/auth.module'
 import { JwtService } from '@nestjs/jwt'
+import { ProductModule } from './product/product.module'
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { JwtService } from '@nestjs/jwt'
     RestaurantModule,
     PrismaModule,
     TenantModule,
+    ProductModule,
   ],
   providers: [AppService, AppResolver, JwtService],
 })
@@ -45,6 +47,6 @@ export class AppModule {
     consumer
       .apply(TenantMiddleware)
       .exclude('/api/v1/', '/api/v1/graphql', '/api/v1/graphql/playground')
-      .forRoutes('*') // Apply tenant middleware to all routes
+      .forRoutes('*') //Apply tenant middleware to all routes
   }
 }

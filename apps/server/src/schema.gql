@@ -52,10 +52,17 @@ type RefreshTokenResponse {
   message: String!
 }
 
+type Product {
+  title: String!
+  price: Float!
+  description: String!
+}
+
 type Query {
   getHello: String!
   getAllUsers: [User!]!
   tenants: [Tenant!]!
+  getAllProducts: [Product!]!
 }
 
 type Mutation {
@@ -65,6 +72,7 @@ type Mutation {
   createUser(name: String!, email: String!, password: String!, role: UserRole!, tenantId: String!): User!
   createRestaurantWithOwner(tenantId: String!, restaurantData: CreateRestaurantInput!, ownerData: CreateOwnerInput!): Restaurant!
   createTenant(name: String!): Tenant!
+  createProduct(createProductInput: CreateProductInput!): Product!
 }
 
 input LoginDto {
@@ -83,4 +91,10 @@ input CreateOwnerInput {
   password: String!
   tenantId: String!
   role: UserRole!
+}
+
+input CreateProductInput {
+  title: String!
+  price: Float!
+  description: String!
 }
