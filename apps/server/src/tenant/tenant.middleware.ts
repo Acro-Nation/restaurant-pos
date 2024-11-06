@@ -28,9 +28,6 @@ export class TenantMiddleware implements NestMiddleware {
       const userId = decoded.sub
       const tenantId = decoded.tenantId
 
-      console.log('userId', userId)
-      console.log('tenantId', tenantId)
-
       const user = await this.userService.findOne(userId)
       if (!user || user.tenantId !== tenantId) {
         throw new UnauthorizedException('Invalid tenant access')
