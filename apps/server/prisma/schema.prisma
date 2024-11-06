@@ -92,12 +92,12 @@ model Order {
 
 
 model Product {
-  id        String   @id @default(uuid())
-  title      String
-  price     Int
-  description String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String      @id @default(uuid())
+  title        String
+  price        Int
+  description  String
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
 }
 
 // Role and Status Enums
