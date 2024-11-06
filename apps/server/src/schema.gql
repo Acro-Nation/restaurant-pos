@@ -80,7 +80,7 @@ type Query {
   getAllUsers: [User!]!
   getAllRestaurants: [Restaurant!]!
   getAllTenants: [Tenant!]!
-  getSubscriptions(tenantId: String!): [Subscription!]!
+  getAllSubscriptions: [Subscription!]!
 }
 
 type Mutation {
@@ -90,7 +90,7 @@ type Mutation {
   createUser(name: String!, email: String!, password: String!, role: UserRole!): User!
   createRestaurantWithOwner(tenantId: String!, restaurantData: CreateRestaurantInput!, ownerData: CreateOwnerInput!): Restaurant!
   createTenant(name: String!): Tenant!
-  updateSubscriptionStatus(subscriptionId: String!, status: String!): Subscription!
+  updateSubscriptionStatus(subscriptionId: String!, status: SubscriptionStatus!): Subscription!
   deleteSubscription(subscriptionId: String!): Subscription!
 }
 

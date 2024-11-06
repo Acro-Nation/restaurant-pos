@@ -15,10 +15,8 @@ export class SubscriptionResolver {
   @Query(() => [Subscription])
   @UseGuards(GqlAuthGuard, RolesGuard)
   @Roles(UserRole.SUPER_ADMIN)
-  async getSubscriptions(
-    @Args('tenantId') tenantId: string,
-  ): Promise<Subscription[]> {
-    return this.subscriptionService.getSubscriptionsByTenant(tenantId)
+  async getAllSubscriptions(): Promise<Subscription[]> {
+    return this.subscriptionService.getSubscriptions()
   }
 
   @Mutation(() => Subscription)
@@ -26,7 +24,8 @@ export class SubscriptionResolver {
   @Roles(UserRole.SUPER_ADMIN)
   async updateSubscriptionStatus(
     @Args('subscriptionId') subscriptionId: string,
-    @Args('status') status: SubscriptionStatus,
+    @Args('status', { type: () => SubscriptionStatus })
+    status: SubscriptionStatus,
   ): Promise<Subscription> {
     return this.subscriptionService.updateSubscriptionStatus(
       subscriptionId,

@@ -48,9 +48,7 @@ export class SubscriptionService {
     })
   }
 
-  async getSubscriptionsByTenant(tenantId: string): Promise<Subscription[]> {
-    return this.prisma.subscription.findMany({
-      where: { tenantId },
-    })
+  async getSubscriptions(): Promise<Subscription[]> {
+    return this.prisma.subscription.findMany()
   }
 }
