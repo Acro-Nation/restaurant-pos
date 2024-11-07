@@ -17,8 +17,8 @@ export class CreateOrderInput {
   @Field()
   @IsString()
   @IsNotEmpty()
-  userId: string
-
+  waiterId: string
+  
   @Field()
   @IsNumber()
   totalAmount: number
