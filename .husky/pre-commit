@@ -1,13 +1,33 @@
+#!/bin/sh
+
 # Get a list of staged files
 STAGED_FILES=$(git diff --cached --name-only)
 
-# Check if the changes are in "apps/dashboard" or "apps/server"
-if echo "$STAGED_FILES" | grep -q '^apps/dashboard/'; then
-  echo "Client changes detected. Running dashboard validation..."
-  pnpm validate:dashboard
+# Initialize flags
+DASHBOARD_CHANGES=false
+SERVER_CHANGES=false
+
+# Check each staged file
+while IFS= read -r file; do
+  case "$file" in
+    apps/dashboard/*)
+      DASHBOARD_CHANGES=true
+      ;;
+    apps/server/*)
+      SERVER_CHANGES=true
+      ;;
+  esac
+done <<< "$STAGED_FILES"
+
+# Run validations only where changes were detected
+if [ "$DASHBOARD_CHANGES" = true ]; then
+  echo "📱 Dashboard changes detected. Running dashboard validation..."
+  pnpm validate:dashboard || exit 1
 fi
 
-if echo "$STAGED_FILES" | grep -q '^apps/server/'; then
-  echo "Server changes detected. Running server validation..."
-  pnpm validate:server
+if [ "$SERVER_CHANGES" = true ]; then
+  echo "🖥️  Server changes detected. Running server validation..."
+  pnpm validate:server || exit 1
 fi
+
+exit 0

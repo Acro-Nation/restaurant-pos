@@ -14,16 +14,16 @@
     ]
   },
   "scripts": {
-    "format:write:server": "prettier \"apps/server/**/*.{ts,tsx,js,json}\" --write",
     "format:write:dashboard": "prettier \"apps/dashboard/**/*.{ts,tsx,js,json}\" --write",
-    "tsc:server": "pnpm -r --filter apps/server tsc --noEmit",
-    "tsc:dashboard": "pnpm -r --filter apps/dashboard tsc --noEmit",
-    "lint:server": "pnpm -r --filter apps/server lint",
-    "lint:dashboard": "pnpm -r --filter apps/dashboard lint",
-    "build:server": "pnpm -r --filter apps/server build",
-    "build:dashboard": "pnpm -r --filter apps/dashboard build",
-    "validate:server": "pnpm format:write:server && pnpm tsc:server && pnpm lint:server && pnpm build:server",
-    "validate:dashboard": "pnpm format:write:dashboard && pnpm tsc:dashboard && pnpm lint:dashboard && pnpm build:dashboard"
+    "tsc:dashboard": "pnpm --filter \"dashboard\" tsc --noEmit",
+    "lint:dashboard": "pnpm --filter \"dashboard\" lint",
+    "build:dashboard": "pnpm --filter \"dashboard\" build",
+    "format:write:server": "prettier \"apps/server/**/*.{ts,tsx,js,json}\" --write",
+    "tsc:server": "pnpm --filter \"server\" tsc --noEmit",
+    "lint:server": "pnpm --filter \"server\" lint",
+    "build:server": "pnpm --filter \"server\" build",
+    "validate:dashboard": "pnpm format:write:dashboard && pnpm tsc:dashboard && pnpm lint:dashboard && pnpm build:dashboard",
+    "validate:server": "pnpm format:write:server && pnpm tsc:server && pnpm lint:server && pnpm build:server"
   },
   "devDependencies": {
     "husky": "^9.1.6",
