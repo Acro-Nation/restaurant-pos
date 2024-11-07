@@ -1,6 +1,6 @@
 import React from 'react'
 import ReuseIcon from '../reuseIcon/reuseIcon'
-import { FaPlus } from 'react-icons/fa'
+
 
 const CategoryCard = () => {
   return (
@@ -9,7 +9,7 @@ const CategoryCard = () => {
         <div className="text-[24px] leading-9 font-semibold">
           Tuna Salad Sandwich
         </div>
-        <ReuseIcon icon={<FaPlus color="white" />} />
+        <ReuseIcon  />
       </div>
 
       <div className="flex gap-2">
