@@ -1,19 +1,18 @@
 import ReuseIcon from '../reuseIcon/reuseIcon'
 
-
 const Salestabs = () => {
   return (
     <div className=" w-[377px] border p-4 flex flex-col gap-11 rounded-lg bg-white">
       <div className="flex items-center gap-5">
         <div>
-        <ReuseIcon />
+          <ReuseIcon />
         </div>
         <div className="text-[20px] leading-7 font-medium">Net Sales</div>
       </div>
 
       <div className="flex items-center justify-between text-[14px] leading-[22px] font-medium text-[#00897B] h-[64px]">
         <div className="flex items-center">
-        <ReuseIcon />
+          <ReuseIcon />
           <div className="border-r-4 pr-4 border-[#D9D9D9]">
             +2.25% from last weekly
           </div>

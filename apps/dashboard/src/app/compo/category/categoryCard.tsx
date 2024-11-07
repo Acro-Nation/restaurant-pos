@@ -1,7 +1,6 @@
 import React from 'react'
 import ReuseIcon from '../reuseIcon/reuseIcon'
 
-
 const CategoryCard = () => {
   return (
     <div className="w-[406px] border p-4 flex flex-col gap-11 rounded-lg bg-white">
@@ -9,7 +8,7 @@ const CategoryCard = () => {
         <div className="text-[24px] leading-9 font-semibold">
           Tuna Salad Sandwich
         </div>
-        <ReuseIcon  />
+        <ReuseIcon />
       </div>
 
       <div className="flex gap-2">

@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import {
   Sidebar,
@@ -7,17 +7,14 @@ import {
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarMenu,
-} from "@/components/ui/sidebar"
+} from '@/components/ui/sidebar'
 
-import { drawerItems } from "@/utils/drawerItems";
-import SidebarItems from "./sidebarItems";
-
-
-
-
+import { drawerItems } from '@/utils/drawerItems'
+import SidebarItems from './sidebarItems'
+import { DrawerItem } from '@/types/userRole'
 
 export function AppSidebar() {
-  const roleBasedItems = drawerItems('admin');
+  const roleBasedItems = drawerItems('admin')
   return (
     <Sidebar>
       <SidebarContent>
@@ -25,9 +22,8 @@ export function AppSidebar() {
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-
-              {roleBasedItems.map((item:any) => (
-               <SidebarItems item={item}/>
+              {roleBasedItems.map((item: DrawerItem) => (
+                <SidebarItems item={item} key={item.title} />
               ))}
             </SidebarMenu>
           </SidebarGroupContent>

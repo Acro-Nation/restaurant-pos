@@ -1,59 +1,57 @@
-
-import { USER_ROLE } from "@/contant/role";
-import { DrawerItem, userRole } from "@/types/userRole";
-
+import { USER_ROLE } from '@/contant/role'
+import { DrawerItem, userRole } from '@/types/userRole'
 
 export const drawerItems = (role: userRole): DrawerItem[] => {
-  const roleMenus: DrawerItem[] = [];
+  const roleMenus: DrawerItem[] = []
 
   switch (role) {
     case USER_ROLE.admin:
       roleMenus.push(
         {
-          title: "Dashboard",
+          title: 'Dashboard',
           path: `${role}`,
           icon: 'MdInbox',
         },
         {
-          title: "New Order",
+          title: 'New Order',
           path: `${role}/new-order`,
           icon: 'MdInbox',
         },
         {
-          title: "Settings",
+          title: 'Settings',
           path: `${role}/settings`,
           icon: 'MdSettings',
-        }
-      );
-      break;
+        },
+      )
+      break
 
     case USER_ROLE.user:
       roleMenus.push(
         {
-          title: "Home",
+          title: 'Home',
           path: `${role}`,
           icon: 'MdDashboard',
         },
         {
-          title: "Search",
+          title: 'Search',
           path: `${role}/search`,
           icon: 'MdSearch',
         },
         {
-          title: "Calendar",
+          title: 'Calendar',
           path: `${role}/calendar`,
           icon: 'MdCalendarToday',
-        }
-      );
-      break;
+        },
+      )
+      break
 
     // Add additional roles as needed
     // case USER_ROLE.MANAGER:
     //    roleMenus.push(...);
 
     default:
-      break;
+      break
   }
 
-  return roleMenus;
-};
+  return roleMenus
+}

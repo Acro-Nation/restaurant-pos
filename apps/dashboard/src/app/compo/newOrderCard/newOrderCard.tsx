@@ -1,4 +1,3 @@
-
 import ReuseIcon from '../reuseIcon/reuseIcon'
 
 const NewOrderCard = () => {
