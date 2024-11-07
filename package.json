@@ -15,15 +15,15 @@
   },
   "scripts": {
     "format:write:server": "prettier \"apps/server/**/*.{ts,tsx,js,json}\" --write",
-    "format:write:client": "prettier \"apps/dashboard/**/*.{ts,tsx,js,json}\" --write",
+    "format:write:dashboard": "prettier \"apps/dashboard/**/*.{ts,tsx,js,json}\" --write",
     "tsc:server": "pnpm -r --filter apps/server tsc --noEmit",
-    "tsc:client": "pnpm -r --filter apps/dashboard tsc --noEmit",
+    "tsc:dashboard": "pnpm -r --filter apps/dashboard tsc --noEmit",
     "lint:server": "pnpm -r --filter apps/server lint",
-    "lint:client": "pnpm -r --filter apps/dashboard lint",
+    "lint:dashboard": "pnpm -r --filter apps/dashboard lint",
     "build:server": "pnpm -r --filter apps/server build",
-    "build:client": "pnpm -r --filter apps/dashboard build",
+    "build:dashboard": "pnpm -r --filter apps/dashboard build",
     "validate:server": "pnpm format:write:server && pnpm tsc:server && pnpm lint:server && pnpm build:server",
-    "validate:client": "pnpm format:write:client && pnpm tsc:client && pnpm lint:client && pnpm build:client"
+    "validate:dashboard": "pnpm format:write:dashboard && pnpm tsc:dashboard && pnpm lint:dashboard && pnpm build:dashboard"
   },
   "devDependencies": {
     "husky": "^9.1.6",

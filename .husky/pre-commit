@@ -1,9 +1,9 @@
 # Get a list of staged files
 STAGED_FILES=$(git diff --cached --name-only)
 
-# Check if the changes are in "apps/client" or "apps/server"
-if echo "$STAGED_FILES" | grep -q '^apps/client/'; then
-  echo "Client changes detected. Running client validation..."
+# Check if the changes are in "apps/dashboard" or "apps/server"
+if echo "$STAGED_FILES" | grep -q '^apps/dashboard/'; then
+  echo "Client changes detected. Running dashboard validation..."
   pnpm validate:client
 fi
 
