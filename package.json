@@ -20,12 +20,10 @@
     "tsc": "pnpm -parallel -r tsc",
     "lint": "pnpm -parallel -r lint",
     "build": "pnpm -parallel -r build",
-    "validate": "pnpm format:write && pnpm tsc && pnpm lint && pnpm build",
-    "prepare": "husky"
+    "validate:client": "pnpm format:write && pnpm tsc && pnpm lint && pnpm build --filter apps/client",
+    "validate:server": "pnpm format:write && pnpm tsc && pnpm lint && pnpm build --filter apps/server",
+    "prepare": "husky install"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "husky": "^9.1.6",
     "prettier": "^3.0.0"
