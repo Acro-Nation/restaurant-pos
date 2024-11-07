@@ -12,14 +12,23 @@ import {
 import { drawerItems } from '@/utils/drawerItems'
 import SidebarItems from './sidebarItems'
 import { DrawerItem } from '@/types/userRole'
-
+import Image from 'next/image'
+import logo from '../assets/Link 1.png'
 export function AppSidebar() {
   const roleBasedItems = drawerItems('admin')
   return (
     <Sidebar>
-      <SidebarContent>
+      <SidebarContent className="bg-white max-w-[280px]">
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+          <SidebarGroupLabel className="h-[74px]">
+            <Image
+              src={logo}
+              height={60}
+              width={60}
+              alt="logo"
+              className="h-auto"
+            />
+          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {roleBasedItems.map((item: DrawerItem) => (
