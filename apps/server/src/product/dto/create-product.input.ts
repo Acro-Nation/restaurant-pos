@@ -10,4 +10,10 @@ export class CreateProductInput {
 
   @Field()
   description: string
+
+  @Field()
+  restaurantId: string
+
+  @Field()
+  tenantId: string
 }
