@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL") // Base database connection for super admin
+  url      = env("DATABASE_URL")
 }
 
 model Tenant {
@@ -13,15 +13,18 @@ model Tenant {
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   users         User[] // Relation to users of the tenant
-  restaurants   Restaurant[] // Relation to restaurants in the tenant
+  restaurant    Restaurant? // One-to-one relation with restaurant
   subscriptions Subscription[] // Relation to subscriptions in the tenant
+  orderProducts OrderProduct[]
+  products      Product[]
+  orders        Order[]
 }
 
 model Restaurant {
   id        String   @id @default(uuid())
   name      String
   address   String
-  tenantId  String   // Foreign key to Tenant
+  tenantId  String   @unique // Foreign key to Tenant (unique for one-to-one)
   tenant    Tenant   @relation(fields: [tenantId], references: [id])
 
   // Admin relation defined here
@@ -31,6 +34,7 @@ model Restaurant {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   orders    Order[]  // Relation to orders for this restaurant
+  products  Product[] // Relation to products for this restaurant
 
   managers  User[]   @relation("Manager") // Additional managers
   waiters   User[]   @relation("Waiter")  // Waiters for this restaurant
@@ -47,11 +51,9 @@ model User {
   tenant            Tenant       @relation(fields: [tenantId], references: [id])
   createdAt         DateTime     @default(now())
   updatedAt         DateTime     @updatedAt
- 
 
   // Relationships for restaurant roles
   ordersAsWaiter    Order[]      @relation("WaiterOrders")
-  ordersAsChef      Order[]      @relation("ChefOrders")
   managedRestaurants Restaurant[] @relation("Manager")
   waitingRestaurants Restaurant[] @relation("Waiter")
   chefRestaurants    Restaurant[] @relation("Chef")
@@ -59,7 +61,6 @@ model User {
   // Relation to restaurant as primary admin (one-to-one)
   adminOfRestaurant Restaurant?  @relation("RestaurantAdmin")
 }
-
 
 model Subscription {
   id                 String             @id @default(uuid())
@@ -79,25 +80,43 @@ model Order {
   id           String      @id @default(uuid())
   restaurantId String
   waiterId     String
-  chefId       String?
   amount       Float
   status       OrderStatus
   createdAt    DateTime    @default(now())
   completedAt  DateTime?
   restaurant   Restaurant  @relation(fields: [restaurantId], references: [id])
   waiter       User        @relation(name: "WaiterOrders", fields: [waiterId], references: [id])
-  chef         User?       @relation(name: "ChefOrders", fields: [chefId], references: [id])
+  products     OrderProduct[] // Relation to order products
   tenantId     String
+  tenant       Tenant      @relation(fields: [tenantId], references: [id])
 }
 
-
 model Product {
-  id           String      @id @default(uuid())
+  id           String         @id @default(uuid())
   title        String
   price        Int
   description  String
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+  restaurantId String        // Foreign key to Restaurant
+  restaurant   Restaurant    @relation(fields: [restaurantId], references: [id])
+  orders       OrderProduct[] // Relation to orders through OrderProduct
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  tenantId     String        // Foreign key to Tenant
+  tenant       Tenant        @relation(fields: [tenantId], references: [id])
+}
+
+// Junction table for Order-Product many-to-many relationship
+model OrderProduct {
+  id        String  @id @default(uuid())
+  orderId   String
+  productId String
+  quantity  Int
+  order     Order   @relation(fields: [orderId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+  tenantId  String  // Foreign key to Tenant
+  tenant    Tenant  @relation(fields: [tenantId], references: [id])
+
+  @@unique([orderId, productId])
 }
 
 // Role and Status Enums
