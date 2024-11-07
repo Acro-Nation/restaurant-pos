@@ -1,0 +1,127 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Tenant {
+  id: ID!
+  name: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  password: String!
+  role: UserRole!
+  tenantId: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  RESTAURANT_ADMIN
+  MANAGER
+  WAITER
+  CHEF
+}
+
+type Restaurant {
+  id: ID!
+  name: String!
+  address: String!
+  tenantId: String!
+  admin: User
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type LoginResponse {
+  message: String!
+}
+
+type RefreshTokenResponse {
+  message: String!
+}
+
+type Subscription {
+  id: ID!
+  tenantId: String!
+  startDate: DateTime!
+  endDate: DateTime!
+  status: SubscriptionStatus!
+  billingCycle: BillingCycle!
+  costPerMonth: Float!
+  orderPercentageFee: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  INACTIVE
+  CANCELLED
+}
+
+enum BillingCycle {
+  MONTHLY
+  ANNUALLY
+}
+
+type Product {
+  title: String!
+  price: Float!
+  description: String!
+}
+
+type Query {
+  getHello: String!
+  getAllUsers: [User!]!
+  getAllRestaurants: [Restaurant!]!
+  getAllTenants: [Tenant!]!
+  getAllSubscriptions: [Subscription!]!
+  getAllProducts: [Product!]!
+}
+
+type Mutation {
+  login(loginDto: LoginDto!): LoginResponse!
+  refreshToken: RefreshTokenResponse!
+  logout: String!
+  createUser(name: String!, email: String!, password: String!, role: UserRole!): User!
+  createRestaurantWithOwner(tenantId: String!, restaurantData: CreateRestaurantInput!, ownerData: CreateOwnerInput!): Restaurant!
+  createTenant(name: String!): Tenant!
+  updateSubscriptionStatus(subscriptionId: String!, status: SubscriptionStatus!): Subscription!
+  deleteSubscription(subscriptionId: String!): Subscription!
+  createProduct(createProductInput: CreateProductInput!): Product!
+}
+
+input LoginDto {
+  email: String!
+  password: String!
+}
+
+input CreateRestaurantInput {
+  name: String!
+  address: String!
+}
+
+input CreateOwnerInput {
+  name: String!
+  email: String!
+  password: String!
+  tenantId: String!
+  role: UserRole!
+}
+
+input CreateProductInput {
+  title: String!
+  price: Float!
+  description: String!
+}
