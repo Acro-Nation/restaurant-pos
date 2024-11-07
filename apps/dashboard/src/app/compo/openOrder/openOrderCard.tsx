@@ -1,4 +1,4 @@
-import { RiArrowDropDownLine } from 'react-icons/ri'
+
 import Ordertotal from './ordertotal'
 
 const OpenOrderCard = () => {
@@ -13,7 +13,7 @@ const OpenOrderCard = () => {
           <li className="border-r-4 px-4">04:30 PM</li>
           <li className="px-4">02 Items</li>
           <li className="px-4">
-            <RiArrowDropDownLine className="size-6" />
+            arrowIcon
           </li>
         </ul>
         <ul className="flex items-center text-[24px] leading-8 font-medium text-[#00897B] h-[64px]">
