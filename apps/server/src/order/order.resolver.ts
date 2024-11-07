@@ -16,7 +16,13 @@ export class OrderResolver {
 
   @Query(() => [Order])
   @UseGuards(GqlAuthGuard, RolesGuard)
-  @Roles(UserRole.RESTAURANT_ADMIN, UserRole.MANAGER, UserRole.WAITER) // Restrict to these roles
+  @Roles(
+    UserRole.RESTAURANT_ADMIN,
+    UserRole.MANAGER,
+    UserRole.WAITER,
+    UserRole.WAITER,
+    UserRole.CHEF,
+  ) // Restrict to these roles
   async getAllOrders(
     @Args('tenantId') tenantId: string,
     @Args('skip', { type: () => Number, nullable: true }) skip: number = 0,
@@ -27,14 +33,14 @@ export class OrderResolver {
 
   @Query(() => Order)
   @UseGuards(GqlAuthGuard, RolesGuard)
-  @Roles(UserRole.RESTAURANT_ADMIN, UserRole.MANAGER, UserRole.WAITER) // Restrict to these roles
+  @Roles(UserRole.WAITER) // Restrict to these roles
   async getOrderById(@Args('orderId') orderId: string): Promise<Order> {
     return this.orderService.getOrderById(orderId)
   }
 
   @Mutation(() => Order)
   @UseGuards(GqlAuthGuard, RolesGuard)
-  @Roles(UserRole.RESTAURANT_ADMIN, UserRole.MANAGER, UserRole.WAITER) // Restrict to these roles
+  @Roles(UserRole.WAITER) // Restrict to these roles
   async createOrder(
     @Args('createOrderInput') createOrderInput: CreateOrderInput,
   ): Promise<Order> {
@@ -43,7 +49,7 @@ export class OrderResolver {
 
   @Mutation(() => Order)
   @UseGuards(GqlAuthGuard, RolesGuard)
-  @Roles(UserRole.RESTAURANT_ADMIN, UserRole.MANAGER, UserRole.WAITER) // Restrict to these roles
+  @Roles(UserRole.WAITER) // Restrict to these roles
   async updateOrderStatus(
     @Args('orderId') orderId: string,
     @Args('updateOrderInput') updateOrderInput: UpdateOrderInput,

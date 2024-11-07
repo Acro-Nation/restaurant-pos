@@ -1,17 +1,10 @@
-// src/order/order.entity.ts
-import { ObjectType, Field, ID, Float, registerEnumType } from '@nestjs/graphql'
-import { Tenant } from './tenant.entity'
-import { Restaurant } from './restaurant.entity'
-import { User } from './user.entity'
+// src/common/entities/order.entity.ts
+import { ObjectType, Field, Float } from '@nestjs/graphql'
 import { OrderStatus } from '@prisma/client'
-
-registerEnumType(OrderStatus, {
-  name: 'OrderStatus',
-})
 
 @ObjectType()
 export class Order {
-  @Field(() => ID)
+  @Field()
   id: string
 
   @Field()
@@ -21,26 +14,17 @@ export class Order {
   restaurantId: string
 
   @Field()
-  userId: string // Created by (e.g., waiter, admin)
-
-  @Field()
-  status: OrderStatus // Can be: PENDING, COMPLETED, CANCELLED, etc.
+  waiterId: string // Changed from userId to waiterId
 
   @Field(() => Float)
-  totalAmount: number
+  amount: number
+
+  @Field()
+  status: OrderStatus
 
   @Field()
   createdAt: Date
 
-  @Field()
-  updatedAt: Date
-
-  @Field(() => Tenant)
-  tenant: Tenant
-
-  @Field(() => Restaurant)
-  restaurant: Restaurant
-
-  @Field(() => User)
-  user: User
+  @Field({ nullable: true })
+  completedAt?: Date
 }

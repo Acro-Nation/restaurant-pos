@@ -14,7 +14,8 @@ import { UserModule } from './user/user.module'
 import { AuthModule } from './auth/auth.module'
 import { SubscriptionModule } from './subscription/subscription.module'
 import { JwtService } from '@nestjs/jwt'
-import { ProductModule } from './product/product.module'
+// import { ProductModule } from './product/product.module'
+import { OrderModule } from './order/order.module'
 
 @Module({
   imports: [
@@ -39,10 +40,9 @@ import { ProductModule } from './product/product.module'
     RestaurantModule,
     PrismaModule,
     TenantModule,
-
     SubscriptionModule,
-
-    ProductModule,
+    // ProductModule,
+    OrderModule,
   ],
   providers: [AppService, AppResolver, JwtService],
 })

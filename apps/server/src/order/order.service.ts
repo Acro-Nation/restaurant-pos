@@ -1,7 +1,7 @@
 // src/order/order.service.ts
 import { Injectable, ForbiddenException } from '@nestjs/common'
 import { PrismaService } from 'src/common/prisma/prisma.service'
-import { UserRole } from '@prisma/client'
+import { OrderStatus, UserRole } from '@prisma/client'
 import { CreateOrderInput } from './dto/create-order.input'
 import { Order } from 'src/common/entities/order.entity'
 
@@ -9,11 +9,10 @@ import { Order } from 'src/common/entities/order.entity'
 export class OrderService {
   constructor(private prisma: PrismaService) {}
 
-  // Create a new order
   async createOrder(createOrderInput: CreateOrderInput): Promise<Order> {
-    // Fetch the user to check their role
+    // Fetch the user to check their role (using waiterId now)
     const user = await this.prisma.user.findUnique({
-      where: { id: createOrderInput.userId },
+      where: { id: createOrderInput.waiterId },
     })
 
     if (user?.role === UserRole.CHEF) {
@@ -25,8 +24,8 @@ export class OrderService {
       data: {
         tenantId: createOrderInput.tenantId,
         restaurantId: createOrderInput.restaurantId,
-        userId: createOrderInput.userId,
-        totalAmount: createOrderInput.totalAmount,
+        waiterId: createOrderInput.waiterId,
+        amount: createOrderInput.totalAmount,
         status: 'PENDING', // Default status
       },
     })
@@ -63,7 +62,10 @@ export class OrderService {
   }
 
   // Update the status of an order
-  async updateOrderStatus(orderId: string, status: string): Promise<Order> {
+  async updateOrderStatus(
+    orderId: string,
+    status: OrderStatus,
+  ): Promise<Order> {
     const order = await this.prisma.order.update({
       where: { id: orderId },
       data: { status },
