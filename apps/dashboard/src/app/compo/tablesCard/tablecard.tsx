@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Tablecard = () => {
-  return <div></div>
+  return <div>This is table card</div>
 }
 
 export default Tablecard

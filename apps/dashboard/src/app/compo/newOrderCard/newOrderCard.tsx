@@ -1,4 +1,3 @@
-import { FaPlus } from 'react-icons/fa'
 import ReuseIcon from '../reuseIcon/reuseIcon'
 
 const NewOrderCard = () => {
@@ -12,7 +11,7 @@ const NewOrderCard = () => {
             150.00
           </span>
         </div>
-        <ReuseIcon icon={<FaPlus color="white" />} />
+        <ReuseIcon />
       </div>
     </div>
   )
