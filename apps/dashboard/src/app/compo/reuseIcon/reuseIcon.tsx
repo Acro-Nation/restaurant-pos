@@ -10,7 +10,6 @@ interface ReuseIconProps {
 
 const ReuseIcon: React.FC<ReuseIconProps> = ({
   size = 24,
-  color,
   onClick,
   icon,
   bgColor = '#00897B',
