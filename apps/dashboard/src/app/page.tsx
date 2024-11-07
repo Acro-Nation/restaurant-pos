@@ -11,7 +11,6 @@ export default function Home() {
 
       <ReuseIcon bgColor="black" />
 
-
       <NewOrderCard />
       <OpenOrderCard />
       <Salestabs />
