@@ -1,7 +1,13 @@
 // src/order/order.service.ts
 import { Injectable, ForbiddenException } from '@nestjs/common'
 import { PrismaService } from 'src/common/prisma/prisma.service'
-import { OrderStatus, UserRole } from '@prisma/client'
+import { OrderStatus, User, UserRole } from '@prisma/client'
+import {
+  PaginatedResult,
+  PaginationParams,
+  calculateOffset,
+  paginate,
+} from 'src/common/utils/pagination.utils'
 import { CreateOrderInput } from './dto/create-order.input'
 import { Order } from 'src/common/entities/order.entity'
 
@@ -35,17 +41,30 @@ export class OrderService {
 
   // Get all orders for a tenant
   async getAllOrders(
-    tenantId: string,
-    skip: number,
-    take: number,
-  ): Promise<Order[]> {
-    const orders = await this.prisma.order.findMany({
-      where: { tenantId },
-      skip,
-      take,
-    })
+    user: User,
+    params: PaginationParams,
+  ): Promise<PaginatedResult<Order>> {
+    const tenantId = user.tenantId
 
-    return orders
+    const { page, limit } = params
+    const offset = calculateOffset(page, limit)
+
+    const [orders, total] = await this.prisma.$transaction([
+      this.prisma.order.findMany({
+        where: {
+          tenantId,
+        },
+        skip: offset,
+        take: limit,
+      }),
+      this.prisma.order.count({
+        where: {
+          tenantId,
+        },
+      }),
+    ])
+
+    return paginate(orders, total, page, limit)
   }
 
   // Get a specific order by ID

@@ -1,5 +1,5 @@
 // src/order/order.resolver.ts
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
+import { Resolver, Query, Mutation, Args, Int, Context } from '@nestjs/graphql'
 import { OrderService } from './order.service'
 import { UseGuards } from '@nestjs/common'
 import { GqlAuthGuard } from 'src/common/guards/gql-auth.guard'
@@ -9,6 +9,7 @@ import { UserRole } from '@prisma/client'
 import { Order } from 'src/common/entities/order.entity'
 import { CreateOrderInput } from './dto/create-order.input'
 import { UpdateOrderInput } from './dto/update-order.input'
+import { PaginationParams } from 'src/common/utils/pagination.utils'
 
 @Resolver(() => Order)
 export class OrderResolver {
@@ -20,27 +21,31 @@ export class OrderResolver {
     UserRole.RESTAURANT_ADMIN,
     UserRole.MANAGER,
     UserRole.WAITER,
-    UserRole.WAITER,
     UserRole.CHEF,
-  ) // Restrict to these roles
+  )
   async getAllOrders(
-    @Args('tenantId') tenantId: string,
-    @Args('skip', { type: () => Number, nullable: true }) skip: number = 0,
-    @Args('take', { type: () => Number, nullable: true }) take: number = 10,
+    @Context() context: any,
+    @Args('page', { type: () => Int, defaultValue: 1 }) page: number,
+    @Args('limit', { type: () => Int, defaultValue: 10 }) limit: number,
   ): Promise<Order[]> {
-    return this.orderService.getAllOrders(tenantId, skip, take)
+    const params: PaginationParams = { page, limit }
+    const result = await this.orderService.getAllOrders(
+      context.req.user,
+      params,
+    )
+    return result.data
   }
 
   @Query(() => Order)
   @UseGuards(GqlAuthGuard, RolesGuard)
-  @Roles(UserRole.WAITER) // Restrict to these roles
+  @Roles(UserRole.WAITER, UserRole.CHEF)
   async getOrderById(@Args('orderId') orderId: string): Promise<Order> {
     return this.orderService.getOrderById(orderId)
   }
 
   @Mutation(() => Order)
   @UseGuards(GqlAuthGuard, RolesGuard)
-  @Roles(UserRole.WAITER) // Restrict to these roles
+  @Roles(UserRole.WAITER)
   async createOrder(
     @Args('createOrderInput') createOrderInput: CreateOrderInput,
   ): Promise<Order> {
@@ -49,7 +54,7 @@ export class OrderResolver {
 
   @Mutation(() => Order)
   @UseGuards(GqlAuthGuard, RolesGuard)
-  @Roles(UserRole.WAITER) // Restrict to these roles
+  @Roles(UserRole.WAITER)
   async updateOrderStatus(
     @Args('orderId') orderId: string,
     @Args('updateOrderInput') updateOrderInput: UpdateOrderInput,

@@ -1,6 +1,11 @@
 // src/common/entities/order.entity.ts
 import { ObjectType, Field, Float } from '@nestjs/graphql'
 import { OrderStatus } from '@prisma/client'
+import { registerEnumType } from '@nestjs/graphql'
+
+registerEnumType(OrderStatus, {
+  name: 'OrderStatus',
+})
 
 @ObjectType()
 export class Order {

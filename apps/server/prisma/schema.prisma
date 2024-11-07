@@ -18,48 +18,49 @@ model Tenant {
   orderProducts OrderProduct[]
   products      Product[]
   orders        Order[]
+  notifications Notification[]
 }
 
 model Restaurant {
-  id        String   @id @default(uuid())
-  name      String
-  address   String
-  tenantId  String   @unique // Foreign key to Tenant (unique for one-to-one)
-  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+  id       String @id @default(uuid())
+  name     String
+  address  String
+  tenantId String @unique // Foreign key to Tenant (unique for one-to-one)
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
 
   // Admin relation defined here
-  adminId   String?  @unique
-  admin     User?    @relation("RestaurantAdmin", fields: [adminId], references: [id])
+  adminId String? @unique
+  admin   User?   @relation("RestaurantAdmin", fields: [adminId], references: [id])
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  orders    Order[]  // Relation to orders for this restaurant
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  orders    Order[] // Relation to orders for this restaurant
   products  Product[] // Relation to products for this restaurant
 
-  managers  User[]   @relation("Manager") // Additional managers
-  waiters   User[]   @relation("Waiter")  // Waiters for this restaurant
-  chefs     User[]   @relation("Chef")    // Chefs for this restaurant
+  managers User[] @relation("Manager") // Additional managers
+  waiters  User[] @relation("Waiter") // Waiters for this restaurant
+  chefs    User[] @relation("Chef") // Chefs for this restaurant
 }
 
 model User {
-  id                 String       @id @default(uuid())
-  name               String
-  email              String       @unique
-  password           String
-  role               UserRole
-  tenantId          String       // Foreign key to Tenant
-  tenant            Tenant       @relation(fields: [tenantId], references: [id])
-  createdAt         DateTime     @default(now())
-  updatedAt         DateTime     @updatedAt
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      UserRole
+  tenantId  String // Foreign key to Tenant
+  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   // Relationships for restaurant roles
-  ordersAsWaiter    Order[]      @relation("WaiterOrders")
+  ordersAsWaiter     Order[]      @relation("WaiterOrders")
   managedRestaurants Restaurant[] @relation("Manager")
   waitingRestaurants Restaurant[] @relation("Waiter")
   chefRestaurants    Restaurant[] @relation("Chef")
 
   // Relation to restaurant as primary admin (one-to-one)
-  adminOfRestaurant Restaurant?  @relation("RestaurantAdmin")
+  adminOfRestaurant Restaurant? @relation("RestaurantAdmin")
 }
 
 model Subscription {
@@ -77,18 +78,19 @@ model Subscription {
 }
 
 model Order {
-  id           String      @id @default(uuid())
+  id           String         @id @default(uuid())
   restaurantId String
   waiterId     String
   amount       Float
   status       OrderStatus
-  createdAt    DateTime    @default(now())
+  createdAt    DateTime       @default(now())
   completedAt  DateTime?
-  restaurant   Restaurant  @relation(fields: [restaurantId], references: [id])
-  waiter       User        @relation(name: "WaiterOrders", fields: [waiterId], references: [id])
+  restaurant   Restaurant     @relation(fields: [restaurantId], references: [id])
+  waiter       User           @relation(name: "WaiterOrders", fields: [waiterId], references: [id])
   products     OrderProduct[] // Relation to order products
   tenantId     String
-  tenant       Tenant      @relation(fields: [tenantId], references: [id])
+  tenant       Tenant         @relation(fields: [tenantId], references: [id])
+  Notification Notification[]
 }
 
 model Product {
@@ -96,13 +98,13 @@ model Product {
   title        String
   price        Int
   description  String
-  restaurantId String        // Foreign key to Restaurant
-  restaurant   Restaurant    @relation(fields: [restaurantId], references: [id])
+  restaurantId String // Foreign key to Restaurant
+  restaurant   Restaurant     @relation(fields: [restaurantId], references: [id])
   orders       OrderProduct[] // Relation to orders through OrderProduct
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  tenantId     String        // Foreign key to Tenant
-  tenant       Tenant        @relation(fields: [tenantId], references: [id])
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  tenantId     String // Foreign key to Tenant
+  tenant       Tenant         @relation(fields: [tenantId], references: [id])
 }
 
 // Junction table for Order-Product many-to-many relationship
@@ -113,10 +115,23 @@ model OrderProduct {
   quantity  Int
   order     Order   @relation(fields: [orderId], references: [id])
   product   Product @relation(fields: [productId], references: [id])
-  tenantId  String  // Foreign key to Tenant
+  tenantId  String // Foreign key to Tenant
   tenant    Tenant  @relation(fields: [tenantId], references: [id])
 
   @@unique([orderId, productId])
+}
+
+model Notification {
+  id        String           @id @default(uuid())
+  type      NotificationType
+  title     String
+  message   String
+  tenantId  String
+  tenant    Tenant           @relation(fields: [tenantId], references: [id])
+  orderId   String?
+  order     Order?           @relation(fields: [orderId], references: [id])
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
 }
 
 // Role and Status Enums
@@ -144,4 +159,13 @@ enum OrderStatus {
   IN_PROGRESS
   COMPLETED
   CANCELLED
+}
+
+enum NotificationType {
+  ORDER_CREATED
+  ORDER_UPDATED
+  ORDER_COMPLETED
+  ORDER_CANCELLED
+  SUBSCRIPTION_EXPIRING
+  NEW_PRODUCT_ADDED
 }

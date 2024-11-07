@@ -8,6 +8,12 @@ import { PrismaService } from 'src/common/prisma/prisma.service'
 import * as bcrypt from 'bcrypt'
 import { User } from 'src/common/entities/user.entity'
 import { UserRole } from '@prisma/client'
+import {
+  calculateOffset,
+  paginate,
+  PaginatedResult,
+  PaginationParams,
+} from 'src/common/utils/pagination.utils'
 
 @Injectable()
 export class UserService {
@@ -36,14 +42,30 @@ export class UserService {
     return user ? this.mapPrismaUserToGraphQL(user) : null
   }
 
-  async findAll(user: User): Promise<User[]> {
-    const users = await this.prisma.user.findMany({
-      where: {
-        tenantId: user.tenantId,
-        id: { not: user.id }, // Exclude current user
-      },
-    })
-    return users.map(this.mapPrismaUserToGraphQL)
+  async findAll(
+    user: User,
+    params: PaginationParams,
+  ): Promise<PaginatedResult<User>> {
+    const { page, limit } = params
+    const offset = calculateOffset(page, limit)
+
+    const [users, total] = await this.prisma.$transaction([
+      this.prisma.user.findMany({
+        where: {
+          tenantId: user.tenantId,
+          id: { not: user.id }, // Exclude current user
+        },
+        skip: offset,
+        take: limit,
+      }),
+      this.prisma.user.count({
+        where: {
+          tenantId: user.tenantId,
+          id: { not: user.id }, // Exclude current user
+        },
+      }),
+    ])
+    return paginate(users, total, page, limit)
   }
 
   async create(data: {
