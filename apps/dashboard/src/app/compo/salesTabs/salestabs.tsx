@@ -1,4 +1,3 @@
-import { PiPlus } from 'react-icons/pi'
 import ReuseIcon from '../reuseIcon/reuseIcon'
 import { SiAbbott } from 'react-icons/si'
 import { CgChart } from 'react-icons/cg'
