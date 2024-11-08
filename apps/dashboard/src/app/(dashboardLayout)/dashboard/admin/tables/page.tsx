@@ -1,10 +1,20 @@
-import Tablecard from '@/app/compo/tablesCard/tablecard'
+
+import TableCard from '@/app/features/tablesCard/tablecard'
 import React from 'react'
 
 const TablePage = () => {
   return (
-    <div>
-      <Tablecard />
+    <div className="grid lg:grid-cols-6 gap-2">
+      <TableCard />
+      <TableCard />
+      <TableCard />
+      <TableCard />
+      <TableCard />
+      <TableCard />
+      <TableCard />
+      <TableCard />
+      <TableCard />
+      <TableCard />
     </div>
   )
 }
