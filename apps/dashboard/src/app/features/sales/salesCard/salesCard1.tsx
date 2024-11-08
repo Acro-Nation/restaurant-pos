@@ -33,5 +33,3 @@ const SalesCard1 = () => {
 }
 
 export default SalesCard1
-
-
