@@ -1,4 +1,4 @@
-import { USER_ROLE } from '@/contant/role'
+import { USER_ROLE } from '@/constant/role'
 import { DrawerItem, userRole } from '@/types/userRole'
 
 import NewOrderIcon from '../assets/icons/NewOrderIcon'

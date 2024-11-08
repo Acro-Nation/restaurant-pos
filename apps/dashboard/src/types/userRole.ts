@@ -1,4 +1,4 @@
-import { USER_ROLE } from '@/contant/role'
+import { USER_ROLE } from '@/constant/role'
 import { FC, SVGProps } from 'react'
 
 export type userRole = keyof typeof USER_ROLE

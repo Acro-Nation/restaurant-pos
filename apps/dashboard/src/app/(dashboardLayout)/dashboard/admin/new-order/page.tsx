@@ -1,9 +1,14 @@
-import NewOrderCard from '@/app/compo/newOrderCard/newOrderCard'
+
+import NewOrderCard from '@/app/features/newOrderCard/newOrderCard'
 import React from 'react'
 
 const NewOrderpage = () => {
   return (
-    <div className="h-[100vh]">
+    <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-4">
+      <NewOrderCard />
+      <NewOrderCard />
+      <NewOrderCard />
+      <NewOrderCard />
       <NewOrderCard />
     </div>
   )
