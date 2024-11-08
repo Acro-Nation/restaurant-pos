@@ -7,41 +7,31 @@ import {
   CreateRestaurantInput,
 } from './dto/create-restaurant.input'
 import { Restaurant } from 'src/common/entities/restaurant.entity'
-import { User } from 'src/common/entities/user.entity'
 import { UserRole } from '@prisma/client'
+import {
+  calculateOffset,
+  paginate,
+  PaginatedResult,
+  PaginationParams,
+} from 'src/common/utils/pagination.utils'
 
 @Injectable()
 export class RestaurantService {
   constructor(private prisma: PrismaService) {}
 
-  private mapPrismaUserToGraphQL(prismaUser: any): User {
-    return {
-      id: prismaUser.id,
-      name: prismaUser.name,
-      email: prismaUser.email,
-      password: prismaUser.password,
-      role: prismaUser.role as UserRole, // Explicit cast to GraphQL UserRole
-      tenantId: prismaUser.tenantId,
-      createdAt: prismaUser.createdAt,
-      updatedAt: prismaUser.updatedAt,
-    }
-  }
-
-  private mapPrismaRestaurantToGraphQL(
-    prismaRestaurant: any,
-    admin?: any,
-  ): Restaurant {
-    return {
-      id: prismaRestaurant.id,
-      name: prismaRestaurant.name,
-      address: prismaRestaurant.address,
-      tenantId: prismaRestaurant.tenantId,
-      admin: admin ? this.mapPrismaUserToGraphQL(admin) : undefined,
-      createdAt: prismaRestaurant.createdAt,
-      updatedAt: prismaRestaurant.updatedAt,
-    }
-  }
-
+  /**
+   * Creates a new restaurant and its admin owner in a single transaction
+   * @param tenantId - The ID of the tenant this restaurant belongs to
+   * @param restaurantData - Restaurant details including name and address
+   * @param ownerData - Owner details including name, email and password
+   * @returns The created restaurant with its admin user
+   *
+   * This method:
+   * 1. Creates a new user with RESTAURANT_ADMIN role
+   * 2. Hashes the owner's password for security
+   * 3. Creates the restaurant and links it to the admin user
+   * 4. Returns the restaurant with the admin details included
+   */
   async createRestaurantWithOwner(
     tenantId: string,
     restaurantData: CreateRestaurantInput,
@@ -71,19 +61,37 @@ export class RestaurantService {
       },
     })
 
-    // Transform the Prisma result to match the GraphQL type
-    return this.mapPrismaRestaurantToGraphQL(restaurant, restaurant.admin)
+    return restaurant
   }
 
-  async findAll(): Promise<Restaurant[]> {
-    const restaurants = await this.prisma.restaurant.findMany({
-      include: {
-        admin: true,
-      },
-    })
+  /**
+   * Retrieves a paginated list of all restaurants
+   * @param params - Pagination parameters including page number and limit
+   * @returns A paginated result containing restaurants and total count
+   *
+   * This method:
+   * 1. Calculates pagination offset based on page and limit
+   * 2. Fetches restaurants with their admin details included
+   * 3. Gets total count of restaurants for pagination
+   * 4. Returns paginated data with restaurants and metadata
+   */
+  async findAll(
+    params: PaginationParams,
+  ): Promise<PaginatedResult<Restaurant>> {
+    const { page, limit } = params
+    const offset = calculateOffset(page, limit)
 
-    return restaurants.map((restaurant) =>
-      this.mapPrismaRestaurantToGraphQL(restaurant, restaurant.admin),
-    )
+    const [restaurants, total] = await this.prisma.$transaction([
+      this.prisma.restaurant.findMany({
+        skip: offset,
+        take: limit,
+        include: {
+          admin: true,
+        },
+      }),
+      this.prisma.restaurant.count(),
+    ])
+
+    return paginate(restaurants, total, page, limit)
   }
 }

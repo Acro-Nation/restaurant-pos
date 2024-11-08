@@ -6,12 +6,14 @@ import {
 import { NextFunction, Request, Response } from 'express'
 import { JwtService } from '@nestjs/jwt'
 import { UserService } from '../user/user.service'
+import { ConfigService } from '@nestjs/config'
 
 @Injectable()
 export class TenantMiddleware implements NestMiddleware {
   constructor(
     private jwtService: JwtService,
     private userService: UserService,
+    private configService: ConfigService,
   ) {}
 
   async use(req: Request, res: Response, next: NextFunction) {
@@ -23,7 +25,7 @@ export class TenantMiddleware implements NestMiddleware {
 
     try {
       const decoded = this.jwtService.verify(token, {
-        secret: process.env.JWT_SECRET,
+        secret: this.configService.get<string>('JWT_SECRET'),
       })
       const userId = decoded.sub
       const tenantId = decoded.tenantId

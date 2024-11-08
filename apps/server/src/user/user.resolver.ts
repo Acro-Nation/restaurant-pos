@@ -7,24 +7,47 @@ import { UseGuards } from '@nestjs/common'
 import { RolesGuard } from 'src/common/guards/roles.guard'
 import { UserRole } from '@prisma/client'
 import { PaginationParams } from 'src/common/utils/pagination.utils'
+import { EncryptResponse } from 'src/common/interfaces/config'
 
 @Resolver(() => User)
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
-  @Query(() => [User])
+  @Query(() => EncryptResponse)
   @UseGuards(GqlAuthGuard, RolesGuard)
-  @Roles(UserRole.RESTAURANT_ADMIN) // Only Restaurant Admins can view all users
+  @Roles(UserRole.RESTAURANT_ADMIN)
   async getAllUsers(
     @Args('page', { type: () => Int, defaultValue: 1 }) page: number,
     @Args('limit', { type: () => Int, defaultValue: 10 }) limit: number,
     @Context() context: any,
-  ): Promise<User[]> {
+  ): Promise<EncryptResponse> {
     const params: PaginationParams = { page, limit }
-    const result = await this.userService.findAll(context.req.user, params)
-    return result.data
+    return await this.userService.findAll(context.req.user, params)
   }
 
+  // @Query(() => EncryptResponse)
+  // @UseGuards(GqlAuthGuard, RolesGuard)
+  // @Roles(UserRole.RESTAURANT_ADMIN)
+  // async getUserById(@Args('id') id: string): Promise<EncryptResponse> {
+  //   return await this.userService.findOne(id)
+  // }
+
+  /**
+   * Creates a new user in the system
+   * @param name - User's full name
+   * @param email - User's email address (must be unique)
+   * @param password - User's password (will be hashed)
+   * @param role - User's role in the system (must be RESTAURANT_ADMIN)
+   * @param context - Request context containing authenticated user info
+   * @returns The created User object
+   *
+   * This mutation:
+   * 1. Requires authentication and RESTAURANT_ADMIN role
+   * 2. Takes user details as arguments
+   * 3. Uses authenticated user's tenant and restaurant IDs
+   * 4. Delegates to UserService to create the user
+   * 5. Returns created user with all fields except password
+   */
   @Mutation(() => User)
   @UseGuards(GqlAuthGuard, RolesGuard)
   @Roles(UserRole.RESTAURANT_ADMIN) // Only Restaurant Admins or Owners can create users

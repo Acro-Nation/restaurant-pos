@@ -43,6 +43,12 @@ type Restaurant {
   updatedAt: DateTime!
 }
 
+type EncryptResponse {
+  success: Boolean!
+  data: String
+  message: String!
+}
+
 type LoginResponse {
   message: String!
 }
@@ -88,8 +94,8 @@ type Order {
 
 type Query {
   getHello: String!
-  getAllUsers(page: Int! = 1, limit: Int! = 10): [User!]!
-  getAllRestaurants: [Restaurant!]!
+  getAllUsers(page: Int! = 1, limit: Int! = 10): EncryptResponse!
+  getAllRestaurants(page: Int! = 1, limit: Int! = 10): [Restaurant!]!
   getAllTenants: [Tenant!]!
   getAllSubscriptions: [Subscription!]!
   getAllOrders(page: Int! = 1, limit: Int! = 10): [Order!]!
