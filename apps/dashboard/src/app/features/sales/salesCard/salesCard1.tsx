@@ -69,6 +69,3 @@ export default SalesCard1
 <<<<<<< HEAD
 </div>  */
 }
-
-
-

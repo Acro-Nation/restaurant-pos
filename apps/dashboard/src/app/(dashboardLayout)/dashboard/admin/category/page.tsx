@@ -1,5 +1,3 @@
-
-
 import CategoryCard from '@/app/features/category/categoryCard'
 import React from 'react'
 
