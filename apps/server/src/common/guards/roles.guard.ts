@@ -22,7 +22,9 @@ export class RolesGuard implements CanActivate {
     const { user } = ctx.getContext().req
 
     if (!requiredRoles.includes(user.role)) {
-      throw new ForbiddenException('Insufficient permissions')
+      throw new ForbiddenException(
+        "You don't have permission to access this resource!",
+      )
     }
 
     return true

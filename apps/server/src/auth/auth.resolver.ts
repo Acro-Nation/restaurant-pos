@@ -6,6 +6,8 @@ import { UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { Request as ExpressRequest } from 'express'
 import { LoginResponse, RefreshTokenResponse } from './dto/auth-response.dto'
+import { EncryptDecryptService } from 'src/common/encrypt-decrypt/encrypt-decrypt.service'
+import { ConfigService } from '@nestjs/config'
 
 interface RequestWithCookies extends ExpressRequest {
   cookies: { [key: string]: string }
@@ -14,8 +16,10 @@ interface RequestWithCookies extends ExpressRequest {
 @Resolver()
 export class AuthResolver {
   constructor(
-    private authService: AuthService,
+    private readonly authService: AuthService,
     private readonly jwtService: JwtService,
+    private readonly encryptDecryptService: EncryptDecryptService,
+    private readonly configService: ConfigService, // Inject ConfigService
   ) {}
 
   @Mutation(() => LoginResponse)
@@ -26,17 +30,16 @@ export class AuthResolver {
     const { accessToken, refreshToken } =
       await this.authService.validateUser(loginDto)
 
-    // Set cookies for access and refresh tokens
     res.cookie('accessToken', accessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: this.configService.get<string>('NODE_ENV') === 'production',
       maxAge: 15 * 60 * 1000, // 15 minutes
       sameSite: 'strict',
     })
 
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: this.configService.get<string>('NODE_ENV') === 'production',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       sameSite: 'strict',
     })
@@ -59,17 +62,34 @@ export class AuthResolver {
 
     try {
       const decoded = this.jwtService.verify(refreshToken, {
-        secret: process.env.JWT_REFRESH_SECRET,
+        secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
       })
 
-      const newAccessToken = this.jwtService.sign(
-        { sub: decoded.sub, tenantId: decoded.tenantId, role: decoded.role },
-        { secret: process.env.JWT_SECRET, expiresIn: '15m' },
+      // Decrypt user ID and tenant ID from the decoded token
+      const decryptedUserId = this.encryptDecryptService.decryptData(
+        decoded.sub,
+      )
+      const decryptedTenantId = this.encryptDecryptService.decryptData(
+        decoded.tenantId,
       )
 
+      // Create a new access token with the decrypted information
+      const newAccessToken = this.jwtService.sign(
+        {
+          sub: decryptedUserId,
+          tenantId: decryptedTenantId,
+          role: decoded.role,
+        },
+        {
+          secret: this.configService.get<string>('JWT_SECRET'),
+          expiresIn: '15m',
+        },
+      )
+
+      // Set the new access token in a cookie
       res.cookie('accessToken', newAccessToken, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: this.configService.get<string>('NODE_ENV') === 'production',
         maxAge: 15 * 60 * 1000, // 15 minutes
         sameSite: 'strict',
       })

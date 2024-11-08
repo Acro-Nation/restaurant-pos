@@ -18,7 +18,6 @@ import { JwtService } from '@nestjs/jwt'
 import { OrderModule } from './order/order.module'
 import { APP_INTERCEPTOR } from '@nestjs/core'
 import { FilterPasswordInterceptor } from './common/utils/filter-password.interceptor'
-import { EncryptDecryptService } from './common/encrypt-decrypt/encrypt-decrypt.service'
 import { EncryptDecryptModule } from './common/encrypt-decrypt/encrypt-decrypt.module'
 
 @Module({
