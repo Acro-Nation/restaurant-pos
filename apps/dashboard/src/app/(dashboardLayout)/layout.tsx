@@ -11,7 +11,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       <div className="w-full">
         <AppBar />
-        <Tabs/>
+        <Tabs />
         <SidebarTrigger />
 
         <div className="bg-[#F5F5F5] h-auto p-6 min-h-[100vh]">{children}</div>
