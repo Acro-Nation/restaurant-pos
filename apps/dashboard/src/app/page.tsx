@@ -10,7 +10,7 @@ export default function Home() {
 
       <ReuseIcon bgColor="black" />
 
-      <NewOrderCard/>
+      <NewOrderCard />
       <OpenOrderCard />
       <Salestabs />
     </div>
