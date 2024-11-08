@@ -1,22 +1,20 @@
-"use client"
-import { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
+'use client'
+import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 
 const DynamicTabs = () => {
-  const pathname = usePathname();
-  const [tabs, setTabs] = useState<string[]>([]);
-  const [activeTab, setActiveTab] = useState<number>(0);
+  const pathname = usePathname()
+  const [tabs, setTabs] = useState<string[]>([])
+  const [activeTab, setActiveTab] = useState<number>(0)
 
   useEffect(() => {
-
-    const segments = pathname.split('/').filter(Boolean);
-    setTabs([segments[segments.length - 1]]); 
-    setActiveTab(0); 
-  }, [pathname]);
+    const segments = pathname.split('/').filter(Boolean)
+    setTabs([segments[segments.length - 1]])
+    setActiveTab(0)
+  }, [pathname])
 
   return (
     <div className="w-full border-t-4 border-gray">
-
       <div className="flex space-x-2">
         {tabs.map((tab, index) => (
           <button
@@ -32,11 +30,8 @@ const DynamicTabs = () => {
           </button>
         ))}
       </div>
-
-     
-      
     </div>
-  );
-};
+  )
+}
 
-export default DynamicTabs;
+export default DynamicTabs

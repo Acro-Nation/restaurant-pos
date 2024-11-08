@@ -8,7 +8,7 @@ const Ordertotal = () => {
         Total Payment
       </p>
       <div className="flex gap-1 items-center h-[64px]">
-        <ReuseIcon bgColor="black" icon={<TkIcon/>}/>
+        <ReuseIcon bgColor="black" icon={<TkIcon />} />
         <span className="text-xl font-bold text-[#00897B]">150.00</span>
         <button className="bg-[#4BBF7414] py-1 px-4 text-[#4BBF74] rounded">
           Paid Online

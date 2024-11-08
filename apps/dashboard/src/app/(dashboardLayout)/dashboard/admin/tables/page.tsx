@@ -1,4 +1,3 @@
-
 import TableCard from '@/app/features/tablesCard/tablecard'
 import React from 'react'
 

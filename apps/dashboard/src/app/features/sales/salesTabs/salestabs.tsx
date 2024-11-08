@@ -1,4 +1,3 @@
-
 import TkIcon from '@/assets/icons/TkIcon'
 import GrowIcon from '@/assets/icons/salesIcon/GrowIcon'
 import ReuseIcon from '@/components/common/reuseIcon/reuseIcon'
@@ -14,7 +13,7 @@ const Salestabs = ({ logo, title, amount }: SaleInfo) => {
 
       <div className="flex items-center justify-between text-[14px] leading-[22px] font-medium text-[#00897B] h-[64px] gap-2">
         <div className="flex items-center gap-2">
-         <GrowIcon/>
+          <GrowIcon />
           <div className="border-r-4 pr-4 border-[#D9D9D9]">
             +2.25% from last weekly
           </div>
