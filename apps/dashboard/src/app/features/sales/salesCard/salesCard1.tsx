@@ -34,38 +34,4 @@ const SalesCard1 = () => {
 
 export default SalesCard1
 
-// if map now works go manually......
 
-{
-  /* <div className='space-y-5'>
-<div className=' flex justify-between '>
-    <span>Gross Sales</span>
-    <span>12.156.00</span>
-</div>
-<div className=' flex justify-between'>
-    <span>Gross Sales</span>
-    <span>12.156.00</span>
-</div>
-<div className=' flex justify-between'>
-    <span>Gross Sales</span>
-    <span>12.156.00</span>
-</div>
-<div className=' flex justify-between'>
-    <span>Gross Sales</span>
-    <span>12.156.00</span>
-</div>
-<div className=' flex justify-between'>
-    <span>Gross Sales</span>
-    <span>12.156.00</span>
-</div>
-<div className=' flex justify-between'>
-    <span>Gross Sales</span>
-    <span>12.156.00</span>
-</div>
-<div className=' flex justify-between'>
-    <span>Gross Sales</span>
-    <span>12.156.00</span>
-</div>
-<<<<<<< HEAD
-</div>  */
-}
