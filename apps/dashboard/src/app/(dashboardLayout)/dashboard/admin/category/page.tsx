@@ -1,5 +1,6 @@
+
+
 import CategoryCard from '@/app/features/category/categoryCard'
-import Tabs from '@/components/atoms/pageTabs'
 import React from 'react'
 
 const CategoryPage = () => {

@@ -66,5 +66,9 @@ export default SalesCard1
     <span>Gross Sales</span>
     <span>12.156.00</span>
 </div>
+<<<<<<< HEAD
 </div>  */
 }
+
+
+
