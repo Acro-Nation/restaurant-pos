@@ -1,5 +1,13 @@
-import { USER_ROLE } from '@/contant/role'
+import { USER_ROLE } from '@/constant/role'
 import { DrawerItem, userRole } from '@/types/userRole'
+
+import NewOrderIcon from '../assets/icons/NewOrderIcon'
+import openOrder from '../assets/icons/OpenOrderIcon'
+import CategoryIcon from '../assets/icons/CategoryIcon'
+import TableIcon from '../assets/icons/TableIcon'
+import SalesIcon from '../assets/icons/SalesIcon'
+import PurchesIcon from '../assets/icons/PurchesIcon'
+import SettingIcon from '../assets/icons/SettingIcon'
 
 export const drawerItems = (role: userRole): DrawerItem[] => {
   const roleMenus: DrawerItem[] = []
@@ -10,37 +18,37 @@ export const drawerItems = (role: userRole): DrawerItem[] => {
         {
           title: 'New Order',
           path: `${role}/new-order`,
-          icon: '',
+          icon: NewOrderIcon,
         },
         {
           title: 'Open Order',
           path: `${role}/open-order`,
-          icon: '',
+          icon: openOrder,
         },
         {
           title: 'Category',
           path: `${role}/category`,
-          icon: '',
+          icon: CategoryIcon,
         },
         {
           title: 'Tables',
           path: `${role}/tables`,
-          icon: '',
+          icon: TableIcon,
         },
         {
           title: 'Sales',
           path: `${role}/sales`,
-          icon: '',
+          icon: SalesIcon,
         },
         {
           title: 'Purches',
           path: `${role}/purches`,
-          icon: '',
+          icon: PurchesIcon,
         },
         {
           title: 'Settings',
           path: `${role}/settings`,
-          icon: '',
+          icon: SettingIcon,
         },
       )
       break
@@ -50,17 +58,17 @@ export const drawerItems = (role: userRole): DrawerItem[] => {
         {
           title: 'Home',
           path: `${role}`,
-          icon: 'MdDashboard',
+          // icon: 'MdDashboard',
         },
         {
           title: 'Search',
           path: `${role}/search`,
-          icon: 'MdSearch',
+          // icon: 'MdSearch',
         },
         {
           title: 'Calendar',
           path: `${role}/calendar`,
-          icon: 'MdCalendarToday',
+          // icon: 'MdCalendarToday',
         },
       )
       break
