@@ -8,11 +8,17 @@ const TablePage = () => {
     <>
       <Tabs
         extraItems={[
-          <div key={1} className="px-4 py-2 flex justify-center items-center gap-2">
+          <div
+            key={1}
+            className="px-4 py-2 flex justify-center items-center gap-2"
+          >
             <ReuseIcon bgColor="#4BBF74" size={7} />
             <span>Available</span>
           </div>,
-          <div key={2} className="px-4 py-2 flex justify-center items-center gap-2">
+          <div
+            key={2}
+            className="px-4 py-2 flex justify-center items-center gap-2"
+          >
             <ReuseIcon bgColor="#FF8800" size={7} />
             <span>In progress</span>
           </div>,
