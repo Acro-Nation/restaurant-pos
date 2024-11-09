@@ -26,7 +26,7 @@ const TablePage = () => {
         title="Categories"
       >
         <TabContent label="Dine-In">
-          <div className="grid lg:grid-cols-6 gap-2">
+          <div className="grid lg:grid-cols-6 gap-2 grid-cols-2">
             <TableCard />
             <TableCard />
             <TableCard />
