@@ -3,7 +3,6 @@ import ReuseIcon from '@/components/common/reuseIcon/reuseIcon'
 import Dropdown from '@/components/molecules/PaymentDropDown/PaymentDropDown'
 import Tabs from '@/components/molecules/Tabs/Tabs'
 
-
 const NewOrderpage = () => {
   return (
     <>
@@ -15,7 +14,7 @@ const NewOrderpage = () => {
           </div>,
           <div key={2}>
             <Dropdown />
-          </div>
+          </div>,
         ]}
       />
       <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-4 p-4">
