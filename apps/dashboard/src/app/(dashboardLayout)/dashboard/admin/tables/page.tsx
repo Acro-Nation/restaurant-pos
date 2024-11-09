@@ -1,10 +1,8 @@
 import TableCard from '@/app/features/tablesCard/tablecard'
-import React from 'react'
 
 const TablePage = () => {
   return (
-    <div className="grid lg:grid-cols-6 gap-2">
-      <TableCard />
+    <div className="grid lg:grid-cols-6 gap-2 p-6">
       <TableCard />
       <TableCard />
       <TableCard />
