@@ -5,19 +5,17 @@ import React from 'react'
 
 const CategoryPage: React.FC = () => {
   return (
-    <Tabs>
-      <TabContent label="Tab 1">
-        <div className="grid lg:grid-cols-4 gap-2 p-6">
-          <CategoryCard title="own" amount="20000000" />
-          <CategoryCard title="own" amount="20000000" />
-          <CategoryCard title="own" amount="20000000" />
-          <CategoryCard title="own" amount="20000000" />
-          <CategoryCard title="own" amount="20000000" />
-          <CategoryCard title="own" amount="20000000" />
-          <CategoryCard title="own" amount="20000000" />
-        </div>
-      </TabContent>
-    </Tabs>
+    <div>
+      <Tabs>
+        <TabContent label="Category">
+          <div className="grid lg:grid-cols-2 gap-2">
+            <CategoryCard title="Own" amount="20000000" />
+            <CategoryCard title="Investment" amount="10000000" />
+          </div>
+        </TabContent>
+        <TabContent label="Category">p</TabContent>
+      </Tabs>
+    </div>
   )
 }
 
