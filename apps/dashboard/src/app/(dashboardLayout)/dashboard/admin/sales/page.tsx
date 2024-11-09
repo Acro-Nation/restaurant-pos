@@ -8,47 +8,46 @@ import React from 'react'
 
 const SalesPage = () => {
   return (
-  
-     <> <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-4">
-     <Salestabs
-       title={'New Order'}
-       logo={<CategoryIcon />}
-       amount={'12000'}
-     />
-     <Salestabs
-       title={'New Order'}
-       logo={<CategoryIcon />}
-       amount={'12000'}
-     />
-     <Salestabs
-       title={'New Order'}
-       logo={<CategoryIcon />}
-       amount={'12000'}
-     />
-     <Salestabs
-       title={'New Order'}
-       logo={<CategoryIcon />}
-       amount={'12000'}
-     />
-     <Salestabs
-       title={'New Order'}
-       logo={<CategoryIcon />}
-       amount={'12000'}
-     />
-   </div>
-   <div className="grid grid-cols-3 gap-3 mt-5">
-     <SalesCard1 />
-     <SalesCard2 />
-     <SalesCard3 />
-   </div>
-
- <div className='grid grid-cols-3 gap-3 mt-5'>
-   <SalesCard1/>
- <SalesCard2/>
- <SalesCard3/>
- </div>
-     </>
-  
+    <>
+      {' '}
+      <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-4">
+        <Salestabs
+          title={'New Order'}
+          logo={<CategoryIcon />}
+          amount={'12000'}
+        />
+        <Salestabs
+          title={'New Order'}
+          logo={<CategoryIcon />}
+          amount={'12000'}
+        />
+        <Salestabs
+          title={'New Order'}
+          logo={<CategoryIcon />}
+          amount={'12000'}
+        />
+        <Salestabs
+          title={'New Order'}
+          logo={<CategoryIcon />}
+          amount={'12000'}
+        />
+        <Salestabs
+          title={'New Order'}
+          logo={<CategoryIcon />}
+          amount={'12000'}
+        />
+      </div>
+      <div className="grid grid-cols-3 gap-3 mt-5">
+        <SalesCard1 />
+        <SalesCard2 />
+        <SalesCard3 />
+      </div>
+      <div className="grid grid-cols-3 gap-3 mt-5">
+        <SalesCard1 />
+        <SalesCard2 />
+        <SalesCard3 />
+      </div>
+    </>
   )
 }
 
