@@ -21,7 +21,7 @@ interface TabContentProps {
   children: ReactNode
 }
 
-export const TabContent: React.FC<TabContentProps> = ({  children }) => (
+export const TabContent: React.FC<TabContentProps> = ({ children }) => (
   <div>{children}</div>
 )
 
