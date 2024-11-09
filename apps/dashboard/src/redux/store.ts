@@ -4,8 +4,8 @@ import orderReducer from './features/order/orderSlict'
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      product:productReducer,
-      order: orderReducer
+      product: productReducer,
+      order: orderReducer,
     },
   })
 }

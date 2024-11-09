@@ -9,14 +9,14 @@ export type TCategoty = {
   amount?: string
 }
 export type TProduct = {
-  id: string;
-  title: string;
-  price: number;
-  description: string;
-};
+  id: string
+  title: string
+  price: number
+  description: string
+}
 export type TOrderItem = {
-  id: string;
-  orderId: string;
-  productId: string;
-  quantity: number;
-};
+  id: string
+  orderId: string
+  productId: string
+  quantity: number
+}
