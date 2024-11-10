@@ -9,7 +9,7 @@ const NewOrderCard = () => {
       <div className="flex justify-between h-[26px]">
         <div className="flex gap-2 justify-center items-center">
           <ReuseIcon icon={<TkIcon />} />
-          <span className="text-xl leading-[26px] font-bold text-[#00897B]">
+          <span className="text-xl leading-[26px] font-bold text-primary">
             150.00
           </span>
         </div>

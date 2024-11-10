@@ -11,7 +11,7 @@ const salesData = [
 const SalesCard2 = () => {
   return (
     <div className="max-w-[502px] h-[450px] border p-4 flex flex-col gap-11 rounded-lg bg-white">
-      <div className="flex items-center text-[14px] leading-[22px] font-medium text-[#00897B] h-[64px] gap-2 ">
+      <div className="flex items-center text-[14px] leading-[22px] font-medium text-primary h-[64px] gap-2 ">
         <GrowIcon />
         <div className="">+2.25% from last weekly</div>
       </div>
