@@ -6,7 +6,7 @@ import React from 'react'
 
 const CategoryCard = ({ title, amount }: TCategoty) => {
   return (
-    <div className="max-w-[377px] border p-4 flex flex-col gap-11 rounded-lg bg-white">
+    <div className="min-w-[377px] border p-4 flex flex-col gap-11 rounded-lg bg-white">
       <div className="flex justify-between items-center">
         <div className="text-[24px] leading-9 font-semibold">{title}</div>
         <ReuseIcon icon={<PlusIcon />} />

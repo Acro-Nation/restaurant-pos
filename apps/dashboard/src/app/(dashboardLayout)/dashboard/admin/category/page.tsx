@@ -1,4 +1,4 @@
-import TableCard from '@/app/features/tablesCard/tablecard'
+import CategoryCard from '@/app/features/category/categoryCard'
 import Tabs from '@/components/molecules/Tabs/Tabs'
 
 import React from 'react'
@@ -9,10 +9,7 @@ const CategoryPage: React.FC = () => {
       <Tabs title="Categories" />
 
       <div className="grid lg:grid-cols-6 gap-2 grid-cols-2 p-4">
-        <TableCard />
-        <TableCard />
-        <TableCard />
-        <TableCard />
+       <CategoryCard amount='2000' title='Falafel Wrap'/>
       </div>
     </div>
   )
