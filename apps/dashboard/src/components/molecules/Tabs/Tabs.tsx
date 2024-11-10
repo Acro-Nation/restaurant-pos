@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 
 const Tab: React.FC<TabProps> = ({ label, isActive, onClick }) => (
   <button
-    className={`px-4 py-2 mx-2 border-b-2 ${isActive ? 'bg-[#00897B] text-white rounded-md' : 'border-transparent bg-[#F5F5F5] rounded-md'}`}
+    className={`px-4 py-2 mx-2 border-b-2 ${isActive ? 'bg-primary text-white rounded-md' : 'border-transparent bg-[#F5F5F5] rounded-md'}`}
     onClick={onClick}
   >
     {label}
