@@ -1,11 +1,6 @@
 'use client'
-import React, { useState, ReactNode } from 'react'
-
-interface TabProps {
-  label: string
-  isActive: boolean
-  onClick: () => void
-}
+import { TabContentProps, TabProps, TabsProps } from '@/types/tabsTyps'
+import React, { useState } from 'react'
 
 const Tab: React.FC<TabProps> = ({ label, isActive, onClick }) => (
   <button
@@ -16,20 +11,9 @@ const Tab: React.FC<TabProps> = ({ label, isActive, onClick }) => (
   </button>
 )
 
-interface TabContentProps {
-  label: string
-  children?: ReactNode
-}
-
 export const TabContent: React.FC<TabContentProps> = ({ children }) => (
   <div>{children}</div>
 )
-
-interface TabsProps {
-  children?: ReactNode | ReactNode[]
-  extraItems?: ReactNode[]
-  title?: string
-}
 
 const Tabs: React.FC<TabsProps> = ({ children, extraItems = [], title }) => {
   const [activeTab, setActiveTab] = useState<number>(0)

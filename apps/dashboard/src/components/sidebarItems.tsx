@@ -1,12 +1,10 @@
-import { SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
+import { IDrawerProps } from '@/types/userRole'
 import Link from 'next/link'
-import { DrawerItem } from '@/types/userRole'
-import { usePathname } from 'next/navigation'
 
-type IProps = {
-  item: DrawerItem
-}
-const SidebarItems = ({ item }: IProps) => {
+import { usePathname } from 'next/navigation'
+import { SidebarMenuButton, SidebarMenuItem } from './atoms/sidebar'
+
+const SidebarItems = ({ item }: IDrawerProps) => {
   const linkPath = `/dashboard/${item.path}`
   const pathName = usePathname()
   const isActive = pathName === linkPath

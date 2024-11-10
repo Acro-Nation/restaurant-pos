@@ -1,9 +1,7 @@
 import CategoryCard from '@/app/features/category/categoryCard'
 import Tabs from '@/components/molecules/Tabs/Tabs'
 
-import React from 'react'
-
-const CategoryPage: React.FC = () => {
+const CategoryPage = () => {
   return (
     <div>
       <Tabs title="Categories" />

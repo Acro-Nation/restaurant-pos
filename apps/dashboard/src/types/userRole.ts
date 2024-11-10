@@ -10,3 +10,7 @@ export type DrawerItem = {
   icon?: FC<SVGProps<SVGSVGElement>>
   child?: DrawerItem[]
 }
+
+export type IDrawerProps = {
+  item: DrawerItem
+}
