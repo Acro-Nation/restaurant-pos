@@ -2,17 +2,13 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Tenant {
-  id: ID!
-  name: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
+type LoginResponse {
+  message: String!
 }
 
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
+type RefreshTokenResponse {
+  message: String!
+}
 
 type User {
   id: ID!
@@ -33,15 +29,10 @@ enum UserRole {
   CHEF
 }
 
-type Restaurant {
-  id: ID!
-  name: String!
-  address: String!
-  tenantId: String!
-  admin: User
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type EncryptResponse {
   success: Boolean!
@@ -49,12 +40,73 @@ type EncryptResponse {
   message: String!
 }
 
-type LoginResponse {
-  message: String!
+type Product {
+  id: ID!
+  title: String!
+  price: Int!
+  description: String!
+  restaurantId: String!
+  tenantId: String!
+  orders: [OrderProduct!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
-type RefreshTokenResponse {
+type OrderProduct {
+  id: ID!
+  orderId: String!
+  productId: String!
+  quantity: Int!
+  tenantId: String!
+  order: Order
+  product: Product
+}
+
+type Order {
+  id: ID!
+  tenantId: String!
+  restaurantId: String!
+  waiterId: String!
+  amount: Float!
+  status: OrderStatus!
+  createdAt: DateTime!
+  completedAt: DateTime
+  products: [OrderProduct!]
+}
+
+enum OrderStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+type Notification {
+  id: ID!
+  type: NotificationType!
+  title: String!
   message: String!
+  tenantId: String!
+  orderId: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Type of Notification"""
+enum NotificationType {
+  ORDER_CREATED
+  ORDER_UPDATED
+  ORDER_COMPLETED
+  ORDER_CANCELLED
+  SUBSCRIPTION_EXPIRING
+  NEW_PRODUCT_ADDED
+}
+
+type Tenant {
+  id: ID!
+  name: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type Subscription {
@@ -81,25 +133,18 @@ enum BillingCycle {
   ANNUALLY
 }
 
-type Order {
-  id: String!
-  tenantId: String!
-  restaurantId: String!
-  waiterId: String!
-  amount: Float!
-  status: String!
-  createdAt: DateTime!
-  completedAt: DateTime
-}
-
 type Query {
   getHello: String!
   getAllUsers(page: Int! = 1, limit: Int! = 10): EncryptResponse!
-  getAllRestaurants(page: Int! = 1, limit: Int! = 10): [Restaurant!]!
+  getAllRestaurants(page: Int! = 1, limit: Int! = 10): EncryptResponse!
   getAllTenants: [Tenant!]!
   getAllSubscriptions: [Subscription!]!
-  getAllOrders(page: Int! = 1, limit: Int! = 10): [Order!]!
+  getAllProducts(page: Int! = 1, limit: Int! = 10): EncryptResponse!
+  getProduct(id: String!): EncryptResponse!
+  getAllOrders(page: Int! = 1, limit: Int! = 10): EncryptResponse!
   getOrderById(orderId: String!): Order!
+  getAllNotifications(page: Int! = 1, limit: Int! = 10): [Notification!]!
+  getNotificationById(id: String!): Notification!
 }
 
 type Mutation {
@@ -107,12 +152,18 @@ type Mutation {
   refreshToken: RefreshTokenResponse!
   logout: String!
   createUser(name: String!, email: String!, password: String!, role: UserRole!): EncryptResponse!
-  createRestaurantWithOwner(tenantId: String!, restaurantData: CreateRestaurantInput!, ownerData: CreateOwnerInput!): Restaurant!
+  createRestaurantWithOwner(tenantId: String!, restaurantData: CreateRestaurantInput!, ownerData: CreateOwnerInput!): EncryptResponse!
   createTenant(name: String!): Tenant!
   updateSubscriptionStatus(subscriptionId: String!, status: SubscriptionStatus!): Subscription!
   deleteSubscription(subscriptionId: String!): Subscription!
+  createProduct(createProductInput: CreateProductInput!): EncryptResponse!
+  updateProduct(id: String!, updateProductInput: UpdateProductInput!): EncryptResponse!
+  removeProduct(id: String!): EncryptResponse!
   createOrder(createOrderInput: CreateOrderInput!): Order!
   updateOrderStatus(orderId: String!, updateOrderInput: UpdateOrderInput!): Order!
+  createNotification(createNotificationInput: CreateNotificationInput!): EncryptResponse!
+  updateNotification(id: String!, updateNotificationInput: UpdateNotificationInput!): EncryptResponse!
+  removeNotification(id: String!): EncryptResponse!
 }
 
 input LoginDto {
@@ -133,20 +184,50 @@ input CreateOwnerInput {
   role: UserRole!
 }
 
+input CreateProductInput {
+  title: String!
+  description: String!
+  price: Int!
+  restaurantId: String!
+}
+
+input UpdateProductInput {
+  title: String
+  description: String
+  price: Int
+  restaurantId: String
+}
+
 input CreateOrderInput {
   tenantId: String!
   restaurantId: String!
   waiterId: String!
   totalAmount: Float!
+  products: [OrderProductInput!]!
+}
+
+input OrderProductInput {
+  productId: String!
+  title: String!
+  quantity: Int!
 }
 
 input UpdateOrderInput {
   status: OrderStatus!
 }
 
-enum OrderStatus {
-  PENDING
-  IN_PROGRESS
-  COMPLETED
-  CANCELLED
+input CreateNotificationInput {
+  type: NotificationType!
+  title: String!
+  message: String!
+  tenantId: String!
+  orderId: String
+}
+
+input UpdateNotificationInput {
+  type: NotificationType
+  title: String
+  message: String
+  tenantId: String
+  orderId: String
 }

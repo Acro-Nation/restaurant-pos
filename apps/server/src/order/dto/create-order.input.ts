@@ -1,25 +1,32 @@
-// src/order/order.input.ts
-import { InputType, Field } from '@nestjs/graphql'
-import { IsString, IsNumber, IsNotEmpty } from 'class-validator'
+// src/order/dto/create-order.input.ts
+import { InputType, Field, Float, Int } from '@nestjs/graphql'
+
+@InputType()
+class OrderProductInput {
+  @Field()
+  productId: string
+
+  @Field()
+  title: string
+
+  @Field(() => Int)
+  quantity: number
+}
 
 @InputType()
 export class CreateOrderInput {
   @Field()
-  @IsString()
-  @IsNotEmpty()
   tenantId: string
 
   @Field()
-  @IsString()
-  @IsNotEmpty()
   restaurantId: string
 
   @Field()
-  @IsString()
-  @IsNotEmpty()
   waiterId: string
 
-  @Field()
-  @IsNumber()
+  @Field(() => Float)
   totalAmount: number
+
+  @Field(() => [OrderProductInput])
+  products: OrderProductInput[]
 }

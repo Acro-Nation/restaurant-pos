@@ -10,12 +10,13 @@ import { Order } from 'src/common/entities/order.entity'
 import { CreateOrderInput } from './dto/create-order.input'
 import { UpdateOrderInput } from './dto/update-order.input'
 import { PaginationParams } from 'src/common/utils/pagination.utils'
+import { EncryptResponse } from 'src/common/interfaces/config'
 
 @Resolver(() => Order)
 export class OrderResolver {
   constructor(private readonly orderService: OrderService) {}
 
-  @Query(() => [Order])
+  @Query(() => EncryptResponse)
   @UseGuards(GqlAuthGuard, RolesGuard)
   @Roles(
     UserRole.RESTAURANT_ADMIN,
@@ -27,19 +28,17 @@ export class OrderResolver {
     @Context() context: any,
     @Args('page', { type: () => Int, defaultValue: 1 }) page: number,
     @Args('limit', { type: () => Int, defaultValue: 10 }) limit: number,
-  ): Promise<Order[]> {
+  ): Promise<EncryptResponse> {
     const params: PaginationParams = { page, limit }
-    const result = await this.orderService.getAllOrders(
-      context.req.user,
-      params,
-    )
-    return result.data
+    return this.orderService.getAllOrders(context.req.user, params)
   }
 
   @Query(() => Order)
   @UseGuards(GqlAuthGuard, RolesGuard)
   @Roles(UserRole.WAITER, UserRole.CHEF)
-  async getOrderById(@Args('orderId') orderId: string): Promise<Order> {
+  async getOrderById(
+    @Args('orderId') orderId: string,
+  ): Promise<EncryptResponse> {
     return this.orderService.getOrderById(orderId)
   }
 
@@ -48,8 +47,10 @@ export class OrderResolver {
   @Roles(UserRole.WAITER)
   async createOrder(
     @Args('createOrderInput') createOrderInput: CreateOrderInput,
-  ): Promise<Order> {
-    return this.orderService.createOrder(createOrderInput)
+    @Context() context: any,
+  ): Promise<EncryptResponse> {
+    const user = context.req.user
+    return this.orderService.createOrder(createOrderInput, user)
   }
 
   @Mutation(() => Order)
@@ -58,7 +59,7 @@ export class OrderResolver {
   async updateOrderStatus(
     @Args('orderId') orderId: string,
     @Args('updateOrderInput') updateOrderInput: UpdateOrderInput,
-  ): Promise<Order> {
+  ): Promise<EncryptResponse> {
     return this.orderService.updateOrderStatus(orderId, updateOrderInput.status)
   }
 }

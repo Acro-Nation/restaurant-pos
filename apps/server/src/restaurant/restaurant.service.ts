@@ -14,29 +14,21 @@ import {
   PaginatedResult,
   PaginationParams,
 } from 'src/common/utils/pagination.utils'
+import { EncryptResponse } from 'src/common/interfaces/config'
+import { EncryptDecryptService } from 'src/common/encrypt-decrypt/encrypt-decrypt.service'
 
 @Injectable()
 export class RestaurantService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private readonly encryptDecryptService: EncryptDecryptService,
+  ) {}
 
-  /**
-   * Creates a new restaurant and its admin owner in a single transaction
-   * @param tenantId - The ID of the tenant this restaurant belongs to
-   * @param restaurantData - Restaurant details including name and address
-   * @param ownerData - Owner details including name, email and password
-   * @returns The created restaurant with its admin user
-   *
-   * This method:
-   * 1. Creates a new user with RESTAURANT_ADMIN role
-   * 2. Hashes the owner's password for security
-   * 3. Creates the restaurant and links it to the admin user
-   * 4. Returns the restaurant with the admin details included
-   */
   async createRestaurantWithOwner(
     tenantId: string,
     restaurantData: CreateRestaurantInput,
     ownerData: CreateOwnerInput,
-  ): Promise<Restaurant> {
+  ): Promise<EncryptResponse> {
     const hashedPassword = await bcrypt.hash(ownerData.password, 10)
 
     const adminUser = await this.prisma.user.create({
@@ -61,23 +53,17 @@ export class RestaurantService {
       },
     })
 
-    return restaurant
+    const encryptedData = this.encryptDecryptService.encryptData(restaurant)
+    const decryptedData = this.encryptDecryptService.decryptData(encryptedData)
+    console.log({ decryptedData })
+    return {
+      data: encryptedData,
+      success: true,
+      message: 'Restaurant created successfully!',
+    }
   }
 
-  /**
-   * Retrieves a paginated list of all restaurants
-   * @param params - Pagination parameters including page number and limit
-   * @returns A paginated result containing restaurants and total count
-   *
-   * This method:
-   * 1. Calculates pagination offset based on page and limit
-   * 2. Fetches restaurants with their admin details included
-   * 3. Gets total count of restaurants for pagination
-   * 4. Returns paginated data with restaurants and metadata
-   */
-  async findAll(
-    params: PaginationParams,
-  ): Promise<PaginatedResult<Restaurant>> {
+  async findAll(params: PaginationParams): Promise<EncryptResponse> {
     const { page, limit } = params
     const offset = calculateOffset(page, limit)
 
@@ -92,6 +78,13 @@ export class RestaurantService {
       this.prisma.restaurant.count(),
     ])
 
-    return paginate(restaurants, total, page, limit)
+    const paginatedResult = paginate(restaurants, total, page, limit)
+    const encryptedData =
+      this.encryptDecryptService.encryptData(paginatedResult)
+    return {
+      data: encryptedData,
+      success: true,
+      message: 'Restaurants fetched successfully!',
+    }
   }
 }

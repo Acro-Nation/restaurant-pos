@@ -34,14 +34,14 @@ export class AuthResolver {
       httpOnly: true,
       secure: this.configService.get<string>('NODE_ENV') === 'production',
       maxAge: 15 * 60 * 1000, // 15 minutes
-      sameSite: 'strict',
+      sameSite: 'none',
     })
 
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: this.configService.get<string>('NODE_ENV') === 'production',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      sameSite: 'strict',
+      sameSite: 'none',
     })
 
     return {

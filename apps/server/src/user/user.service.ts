@@ -79,6 +79,7 @@ export class UserService {
 
     const encryptedData =
       this.encryptDecryptService.encryptData(paginatedResult)
+
     return {
       data: encryptedData,
       success: true,

@@ -1,3 +1,4 @@
+//src/common/pub-sub/pubsub.module.ts
 import { Global, Module } from '@nestjs/common'
 import { PubSub } from 'graphql-subscriptions'
 import { PUB_SUB } from '../interfaces/payload'

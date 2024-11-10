@@ -24,6 +24,8 @@ import { SubscriptionModule } from './subscription/subscription.module'
 // import { ProductModule } from './product/product.module'
 import { FilterPasswordInterceptor } from './common/utils/filter-password.interceptor'
 import { EncryptDecryptModule } from './common/encrypt-decrypt/encrypt-decrypt.module'
+import { NotificationModule } from './notification/notification.module'
+import { ProductModule } from './product/product.module'
 
 @Module({
   imports: [
@@ -49,8 +51,9 @@ import { EncryptDecryptModule } from './common/encrypt-decrypt/encrypt-decrypt.m
     PrismaModule,
     TenantModule,
     SubscriptionModule,
-    // ProductModule,
+    ProductModule,
     OrderModule,
+    NotificationModule,
     EncryptDecryptModule,
   ],
   providers: [

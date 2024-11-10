@@ -20,22 +20,13 @@ export class AuthService {
       loginDto.password,
     )
 
-    if (!user) {
-      throw new UnauthorizedException('Invalid credentials')
-    }
-
-    // Encrypt user ID and tenant ID
-    const encryptedUserId = this.encryptDecryptService.encryptData(user.id)
-    const encryptedTenantId = this.encryptDecryptService.encryptData(
-      user.tenantId,
-    )
-
-    // Generate access and refresh tokens with encrypted values
+    // Use encryptForJwt for JWT payload data
     const payload = {
-      sub: encryptedUserId,
-      tenantId: encryptedTenantId,
+      sub: this.encryptDecryptService.encryptForJwt(user.id),
+      tenantId: this.encryptDecryptService.encryptForJwt(user.tenantId),
       role: user.role,
     }
+
     const accessToken = this.jwtService.sign(payload, {
       secret: this.configService.get<string>('JWT_SECRET'),
       expiresIn: '15m',

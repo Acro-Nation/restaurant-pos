@@ -24,44 +24,28 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(payload: JwtPayload) {
     try {
-      // Decrypt user ID and tenant ID from JWT payload
-      const decryptedUserId = this.encryptDecryptService.decryptData(
-        payload.sub,
-      )
-      const decryptedTenantId = this.encryptDecryptService.decryptData(
+      // Use decryptFromJwt for JWT payload data
+      const userId = this.encryptDecryptService.decryptFromJwt(payload.sub)
+      const tenantId = this.encryptDecryptService.decryptFromJwt(
         payload.tenantId,
       )
 
-      // Check if decryption was successful
-      if (!decryptedUserId || !decryptedTenantId) {
-        throw new UnauthorizedException('Decryption failed')
+      const { data, success } = await this.userService.findOne(userId)
+      if (!success || !data) {
+        throw new UnauthorizedException('User not found')
       }
 
-      // Fetch user from the database using decrypted user ID
-      const encryptedUser = await this.userService.findOne(decryptedUserId)
+      // Use regular decryptData for database data
+      const user = this.encryptDecryptService.decryptData(data, true)
 
-      // Check if the encrypted user was found and decrypt the data field
-      if (!encryptedUser || !encryptedUser.data) {
-        throw new UnauthorizedException(
-          'User not found or missing encrypted data',
-        )
-      }
-
-      // Decrypt the user data (which contains tenantId)
-      const userData: User = this.encryptDecryptService.decryptData(
-        encryptedUser.data,
-      )
-
-      // Verify that the decrypted tenantId matches the expected tenantId
-      if (!userData || userData.tenantId !== decryptedTenantId) {
+      if (user.tenantId !== tenantId) {
         throw new UnauthorizedException('Invalid tenant access')
       }
 
-      // Return the decrypted user data if everything is valid
-      return userData
+      return user
     } catch (error) {
       throw new UnauthorizedException(
-        'Invalid JWT payload or decryption failed',
+        `Invalid JWT payload or decryption failed: ${error.message}`,
       )
     }
   }
