@@ -18,7 +18,7 @@ const ReuseIcon: React.FC<ReuseIconProps> = ({
 }) => {
   return (
     <div
-      className={`rounded-full flex items-center justify-center cursor-pointer ${bgColor ? `bg-[${bgColor}]` : 'bg-[#00897B]'}${className}`}
+      className={`rounded-full flex items-center justify-center cursor-pointer ${bgColor ? `bg-[${bgColor}]` : 'bg-primary'}${className}`}
       onClick={onClick}
       style={{ width: size, height: size, backgroundColor: bgColor }}
     >

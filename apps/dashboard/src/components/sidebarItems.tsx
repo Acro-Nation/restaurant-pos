@@ -12,7 +12,7 @@ const SidebarItems = ({ item }: IDrawerProps) => {
     <SidebarMenuItem className="bg-white w-[232px] mx-auto rounded-md">
       <SidebarMenuButton
         asChild
-        className={`${pathName === linkPath ? 'bg-[#00897B] text-white hover:bg-[#00897B] hover:text-white' : ''} my-1`}
+        className={`${pathName === linkPath ? 'bg-primary text-white hover:bg-primary hover:text-white' : ''} my-1`}
       >
         <Link href={linkPath}>
           <div className="size-[2rem]  flex items-center justify-center">
