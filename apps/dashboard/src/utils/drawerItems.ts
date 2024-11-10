@@ -8,10 +8,7 @@ import TableIcon from '../assets/icons/TableIcon'
 import PurchesIcon from '../assets/icons/PurchesIcon'
 import SettingIcon from '../assets/icons/SettingIcon'
 import SaleIcon from '@/assets/icons/SaleIcon'
-<<<<<<< HEAD
-=======
 
->>>>>>> 6589497 (last change)
 
 export const drawerItems = (role: userRole): DrawerItem[] => {
   const roleMenus: DrawerItem[] = []
