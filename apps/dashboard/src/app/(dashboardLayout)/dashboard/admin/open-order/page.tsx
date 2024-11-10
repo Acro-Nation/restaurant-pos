@@ -1,4 +1,4 @@
-import OpenOrderCard from '@/app/compo/openOrder/openOrderCard'
+import OpenOrderCard from '@/app/features/openOrder/openOrderCard'
 import React from 'react'
 
 const OpenOrderPage = () => {

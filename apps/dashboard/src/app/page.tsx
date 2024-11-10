@@ -1,8 +1,7 @@
-import ReuseIcon from './compo/reuseIcon/reuseIcon'
-import NewOrderCard from './compo/newOrderCard/newOrderCard'
-import OpenOrderCard from './compo/openOrder/openOrderCard'
-import Salestabs from './compo/salesTabs/salestabs'
-import CategoryCard from './compo/category/categoryCard'
+import ReuseIcon from '@/components/common/reuseIcon/reuseIcon'
+import NewOrderCard from './features/newOrderCard/newOrderCard'
+import OpenOrderCard from './features/openOrder/openOrderCard'
+import Salestabs from './features/sales/salesTabs/salestabs'
 
 export default function Home() {
   return (
@@ -14,7 +13,6 @@ export default function Home() {
       <NewOrderCard />
       <OpenOrderCard />
       <Salestabs />
-      <CategoryCard />
     </div>
   )
 }

@@ -6,6 +6,7 @@ interface ReuseIconProps {
   onClick?: () => void
   icon?: React.ReactNode
   bgColor?: string
+  className?: string
 }
 
 const ReuseIcon: React.FC<ReuseIconProps> = ({
@@ -13,10 +14,11 @@ const ReuseIcon: React.FC<ReuseIconProps> = ({
   onClick,
   icon,
   bgColor = '#00897B',
+  className,
 }) => {
   return (
     <div
-      className={`rounded-full flex items-center justify-center cursor-pointer ${bgColor ? `bg-[${bgColor}]` : 'bg-[#00897B]'}`}
+      className={`rounded-full flex items-center justify-center cursor-pointer ${bgColor ? `bg-[${bgColor}]` : 'bg-[#00897B]'}${className}`}
       onClick={onClick}
       style={{ width: size, height: size, backgroundColor: bgColor }}
     >
