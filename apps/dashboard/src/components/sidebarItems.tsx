@@ -1,9 +1,17 @@
+<<<<<<< HEAD
+=======
+import { IDrawerProps } from '@/types/userRole'
+>>>>>>> b69ca41 (checkout dropdown typs)
 import Link from 'next/link'
 
 import { usePathname } from 'next/navigation'
 import { SidebarMenuButton, SidebarMenuItem } from './atoms/sidebar'
 
+<<<<<<< HEAD
 const SidebarItems: React.FC<IDrawerProps> = ({ item }) => {
+=======
+const SidebarItems = ({ item }: IDrawerProps) => {
+>>>>>>> b69ca41 (checkout dropdown typs)
   const linkPath = `/dashboard/${item.path}`
   const pathName = usePathname()
   const isActive = pathName === linkPath

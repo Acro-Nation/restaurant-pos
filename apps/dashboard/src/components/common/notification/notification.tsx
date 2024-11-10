@@ -1,5 +1,9 @@
 import NotificationIcon from '@/assets/icons/Notification'
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> b69ca41 (checkout dropdown typs)
 const Notification = () => {
   const err = true
   return (

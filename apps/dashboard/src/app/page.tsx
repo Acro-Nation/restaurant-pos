@@ -2,6 +2,7 @@ import ReuseIcon from '@/components/common/reuseIcon/reuseIcon'
 import NewOrderCard from './features/newOrderCard/newOrderCard'
 import OpenOrderCard from './features/openOrder/openOrderCard'
 import Salestabs from './features/sales/salesTabs/salestabs'
+import Notification from '@/components/common/notification/notification'
 
 
 export default function Home() {

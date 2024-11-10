@@ -1,5 +1,10 @@
 'use client'
+<<<<<<< HEAD
 
+=======
+import { drawerItems } from '@/utils/drawerItems'
+import { DrawerItem } from '@/types/userRole'
+>>>>>>> b69ca41 (checkout dropdown typs)
 import Image from 'next/image'
 import logo from '../assets/Link 1.png'
 import SidebarItems from './sidebarItems'
@@ -12,8 +17,11 @@ import {
   SidebarGroupLabel,
   SidebarMenu,
 } from './atoms/sidebar'
+<<<<<<< HEAD
 import { drawerItems, footerItems } from '@/utils/drawerItems'
 
+=======
+>>>>>>> b69ca41 (checkout dropdown typs)
 export function AppSidebar() {
   const roleBasedItems = drawerItems('admin')
 
