@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import * as React from 'react'
 import { SVGProps } from 'react'
+=======
+import * as React from "react"
+import { SVGProps } from "react"
+>>>>>>> 6589497 (last change)
 const SaleIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -16,7 +21,7 @@ const SaleIcon = (props: SVGProps<SVGSVGElement>) => (
       y={0}
       maskUnits="userSpaceOnUse"
       style={{
-        maskType: 'luminance',
+        maskType: "luminance",
       }}
     >
       <path
