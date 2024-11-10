@@ -5,9 +5,11 @@ import NewOrderIcon from '../assets/icons/NewOrderIcon'
 import openOrder from '../assets/icons/OpenOrderIcon'
 import CategoryIcon from '../assets/icons/CategoryIcon'
 import TableIcon from '../assets/icons/TableIcon'
-import SalesIcon from '../assets/icons/SalesIcon'
+
 import PurchesIcon from '../assets/icons/PurchesIcon'
 import SettingIcon from '../assets/icons/SettingIcon'
+import SaleIcon from '@/assets/icons/SaleIcon'
+
 
 export const drawerItems = (role: userRole): DrawerItem[] => {
   const roleMenus: DrawerItem[] = []
@@ -38,7 +40,7 @@ export const drawerItems = (role: userRole): DrawerItem[] => {
         {
           title: 'Sales',
           path: `${role}/sales`,
-          icon: SalesIcon,
+          icon: SaleIcon,
         },
         {
           title: 'Purches',
