@@ -8,8 +8,7 @@ import React from 'react'
 
 const SalesPage = () => {
   return (
-    <>
-      {' '}
+    <div className="p-6">
       <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-4">
         <Salestabs
           title={'New Order'}
@@ -47,7 +46,7 @@ const SalesPage = () => {
         <SalesCard2 />
         <SalesCard3 />
       </div>
-    </>
+    </div>
   )
 }
 

@@ -4,12 +4,8 @@ import React, { useState } from 'react'
 import PaymentItemCard from './PaymentItemCard'
 import PaymentSubtotal from './PaymentSubtotal'
 import PaymentTotal from './PaymentTotal'
-import { Button } from '@/components/ui/button'
-
-interface DropdownProps {
-  items?: string[]
-  onSelect?: (item: string) => void
-}
+import { Button } from '@/components/atoms/button'
+import { DropdownProps } from '@/types/componentType'
 
 const Dropdown: React.FC<DropdownProps> = () => {
   const [isOpen, setIsOpen] = useState(false)
