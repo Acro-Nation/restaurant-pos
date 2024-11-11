@@ -1,5 +1,5 @@
 'use client'
-import { TabContentProps, TabProps, TabsProps } from '@/types/tabsTyps'
+
 import React, { useState } from 'react'
 
 const Tab: React.FC<TabProps> = ({ label, isActive, onClick }) => (

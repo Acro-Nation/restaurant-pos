@@ -2,7 +2,7 @@ import PlusIcon from '@/assets/icons/PlusIcon'
 import TkIcon from '@/assets/icons/TkIcon'
 import ReuseIcon from '@/components/common/reuseIcon/reuseIcon'
 import { TCategoty } from '@/types/componentType'
-import React from 'react'
+
 
 const CategoryCard = ({ title, amount }: TCategoty) => {
   return (
