@@ -2,7 +2,8 @@ import TkIcon from '@/assets/icons/TkIcon'
 import GrowIcon from '@/assets/icons/salesIcon/GrowIcon'
 import ReuseIcon from '@/components/common/reuseIcon/reuseIcon'
 
-const Salestabs = ({ logo, title, amount }: SaleInfo) => {
+
+const Salestabs:React.FC<SaleInfo> = ({ logo, title, amount }) => {
   return (
     <div className="max-w-[377px] border p-4 flex flex-col gap-11 rounded-lg bg-white">
       <div className="flex items-center gap-5">
