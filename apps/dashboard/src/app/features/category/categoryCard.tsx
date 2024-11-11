@@ -3,7 +3,6 @@ import TkIcon from '@/assets/icons/TkIcon'
 import ReuseIcon from '@/components/common/reuseIcon/reuseIcon'
 import { TCategoty } from '@/types/componentType'
 
-
 const CategoryCard = ({ title, amount }: TCategoty) => {
   return (
     <div className="min-w-[377px] border p-4 flex flex-col gap-11 rounded-lg bg-white">
