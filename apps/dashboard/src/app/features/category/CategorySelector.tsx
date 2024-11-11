@@ -1,5 +1,4 @@
-import { CategorySelectorProps } from "@/types/componentType";
-
+import { CategorySelectorProps } from '@/types/componentType'
 
 const CategorySelector: React.FC<CategorySelectorProps> = ({
   categoryOptions,
@@ -17,7 +16,6 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({
             className="p-2 bg-white rounded-md mb-2 flex items-center h-[48px] w-full"
           >
             <span>{category.label}</span>
-           
           </button>
 
           {openCategory === category.label && (
@@ -27,8 +25,14 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({
                   <input
                     type="checkbox"
                     value={variant.value}
-                    checked={selectedVariants[category.label]?.includes(variant.value) || false}
-                    onChange={() => onVariantChange(category.label, variant.value)}
+                    checked={
+                      selectedVariants[category.label]?.includes(
+                        variant.value,
+                      ) || false
+                    }
+                    onChange={() =>
+                      onVariantChange(category.label, variant.value)
+                    }
                     className="mr-2 checkbox-custom"
                   />
                   {variant.label}
@@ -39,7 +43,7 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({
         </div>
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default CategorySelector;
+export default CategorySelector
