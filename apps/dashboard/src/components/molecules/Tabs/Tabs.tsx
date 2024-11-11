@@ -1,9 +1,13 @@
 'use client'
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 import { TabContentProps, TabProps, TabsProps } from '@/types/tabsTyps'
 >>>>>>> b69ca41 (checkout dropdown typs)
+=======
+
+>>>>>>> 7c4f9f8 (footer)
 import React, { useState } from 'react'
 
 const Tab: React.FC<TabProps> = ({ label, isActive, onClick }) => (
