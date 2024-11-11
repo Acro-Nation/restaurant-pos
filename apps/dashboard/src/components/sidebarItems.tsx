@@ -1,15 +1,14 @@
-import { IDrawerProps } from '@/types/userRole'
 import Link from 'next/link'
 
 import { usePathname } from 'next/navigation'
 import { SidebarMenuButton, SidebarMenuItem } from './atoms/sidebar'
 
-const SidebarItems = ({ item }: IDrawerProps) => {
+const SidebarItems: React.FC<IDrawerProps> = ({ item }) => {
   const linkPath = `/dashboard/${item.path}`
   const pathName = usePathname()
   const isActive = pathName === linkPath
   return (
-    <SidebarMenuItem className="bg-white w-[232px] mx-auto rounded-md">
+    <SidebarMenuItem className="bg-white  rounded-md">
       <SidebarMenuButton
         asChild
         className={`${pathName === linkPath ? 'bg-primary text-white hover:bg-primary hover:text-white' : ''} my-1`}

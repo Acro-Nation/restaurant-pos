@@ -41,11 +41,7 @@ const SalesPage = () => {
         <SalesCard2 />
         <SalesCard3 />
       </div>
-      <div className="grid grid-cols-3 gap-3 mt-5">
-        <SalesCard1 />
-        <SalesCard2 />
-        <SalesCard3 />
-      </div>
+      <div className="grid grid-cols-3 gap-3 mt-5"></div>
     </div>
   )
 }
