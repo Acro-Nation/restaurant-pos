@@ -28,21 +28,20 @@ interface DropdownProps {
 >>>>>>> 7c4f9f8 (footer)
 }
 
-
 type Variant = {
-  value: string;
-  label: string;
-};
+  value: string
+  label: string
+}
 
 type Category = {
-  label: string;
-  variants: Variant[];
-};
+  label: string
+  variants: Variant[]
+}
 
 interface CategorySelectorProps {
-  categoryOptions: Category[];
-  selectedVariants: { [key: string]: string[] };
-  onVariantChange: (category: string, variantValue: string) => void;
-  openCategory: string | null;
-  toggleCategory: (category: string) => void;
+  categoryOptions: Category[]
+  selectedVariants: { [key: string]: string[] }
+  onVariantChange: (category: string, variantValue: string) => void
+  openCategory: string | null
+  toggleCategory: (category: string) => void
 }

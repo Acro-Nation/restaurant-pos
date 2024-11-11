@@ -6,7 +6,6 @@ import { Button } from '@/components/atoms/button'
 import CategorySelector from '@/app/features/category/CategorySelector'
 import CategoryCard from '@/app/features/category/categoryCard'
 
-
 const CategoryPage = () => {
   const [openCategory, setOpenCategory] = useState<string | null>(null)
   const [selectedVariants, setSelectedVariants] = useState<{
@@ -53,7 +52,7 @@ const CategoryPage = () => {
   return (
     <div>
       <Tabs
-        title={!isCategorySelectorVisible?'Category':'Add Category'}
+        title={!isCategorySelectorVisible ? 'Category' : 'Add Category'}
         extraItems={[
           <Button
             key="addCategoryButton"
