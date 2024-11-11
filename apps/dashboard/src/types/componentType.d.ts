@@ -1,15 +1,15 @@
-export type SaleInfo = {
+type SaleInfo = {
   title?: string
   amount?: string
   logo?: React.ReactNode
 }
 
-export type TCategoty = {
+type TCategoty = {
   title?: string
   amount?: string
 }
 
-export interface DropdownProps {
+interface DropdownProps {
   items?: string[]
   onSelect?: (item: string) => void
 }

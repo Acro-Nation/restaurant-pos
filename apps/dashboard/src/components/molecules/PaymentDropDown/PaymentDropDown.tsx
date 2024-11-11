@@ -5,7 +5,6 @@ import PaymentItemCard from './PaymentItemCard'
 import PaymentSubtotal from './PaymentSubtotal'
 import PaymentTotal from './PaymentTotal'
 import { Button } from '@/components/atoms/button'
-import { DropdownProps } from '@/types/componentType'
 
 const Dropdown: React.FC<DropdownProps> = () => {
   const [isOpen, setIsOpen] = useState(false)
