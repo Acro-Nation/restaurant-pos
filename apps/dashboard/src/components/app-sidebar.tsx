@@ -1,25 +1,25 @@
 'use client'
 
+import { drawerItems, footerItems } from '@/utils/drawerItems'
+import Image from 'next/image'
+import logo from '../assets/Link 1.png'
+import SidebarItems from './sidebarItems'
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarMenu,
-} from '@/components/ui/sidebar'
+} from './atoms/sidebar'
 
-import { drawerItems } from '@/utils/drawerItems'
-
-import { DrawerItem } from '@/types/userRole'
-import Image from 'next/image'
-import logo from '../assets/Link 1.png'
-import SidebarItems from './sidebarItems'
 export function AppSidebar() {
   const roleBasedItems = drawerItems('admin')
+
   return (
     <Sidebar>
-      <SidebarContent className="bg-white max-w-[280px]">
+      <SidebarContent className="max-w-[280px] bg-white">
         <SidebarGroup>
           <SidebarGroupLabel className="h-[74px]">
             <Image
@@ -39,6 +39,14 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+
+      <SidebarFooter className="bg-white">
+        <SidebarMenu>
+          {footerItems.map((item: DrawerItem) => (
+            <SidebarItems item={item} key={item.title} />
+          ))}
+        </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
   )
 }

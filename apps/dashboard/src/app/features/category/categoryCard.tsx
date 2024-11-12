@@ -1,8 +1,7 @@
 import PlusIcon from '@/assets/icons/PlusIcon'
 import TkIcon from '@/assets/icons/TkIcon'
 import ReuseIcon from '@/components/common/reuseIcon/reuseIcon'
-import { TCategoty } from '@/types/componentType'
-import React from 'react'
+import { TCategoty } from '@/types/common'
 
 const CategoryCard = ({ title, amount }: TCategoty) => {
   return (
@@ -14,7 +13,7 @@ const CategoryCard = ({ title, amount }: TCategoty) => {
 
       <div className="flex gap-2">
         <ReuseIcon icon={<TkIcon />} />
-        <span className="text-xl leading-[26px] font-bold text-[#00897B]">
+        <span className="text-xl leading-[26px] font-bold text-primary">
           {amount}
         </span>
       </div>

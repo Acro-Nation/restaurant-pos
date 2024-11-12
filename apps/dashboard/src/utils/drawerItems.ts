@@ -1,17 +1,23 @@
 import { USER_ROLE } from '@/constant/role'
-import { DrawerItem, userRole } from '@/types/userRole'
 
 import NewOrderIcon from '../assets/icons/NewOrderIcon'
 import openOrder from '../assets/icons/OpenOrderIcon'
 import CategoryIcon from '../assets/icons/CategoryIcon'
 import TableIcon from '../assets/icons/TableIcon'
-import SalesIcon from '../assets/icons/SalesIcon'
+
 import PurchesIcon from '../assets/icons/PurchesIcon'
 import SettingIcon from '../assets/icons/SettingIcon'
+import SaleIcon from '@/assets/icons/SaleIcon'
 
 export const drawerItems = (role: userRole): DrawerItem[] => {
   const roleMenus: DrawerItem[] = []
-
+  const defaultMenus = [
+    {
+      title: 'Profile',
+      path: `${role as string}/#`,
+      icon: CategoryIcon,
+    },
+  ]
   switch (role) {
     case USER_ROLE.admin:
       roleMenus.push(
@@ -38,16 +44,16 @@ export const drawerItems = (role: userRole): DrawerItem[] => {
         {
           title: 'Sales',
           path: `${role}/sales`,
-          icon: SalesIcon,
+          icon: SaleIcon,
         },
         {
           title: 'Purches',
-          path: `${role}/purches`,
+          path: `${role}/#`,
           icon: PurchesIcon,
         },
         {
           title: 'Settings',
-          path: `${role}/settings`,
+          path: `${role}/#`,
           icon: SettingIcon,
         },
       )
@@ -81,5 +87,18 @@ export const drawerItems = (role: userRole): DrawerItem[] => {
       break
   }
 
-  return roleMenus
+  return [...roleMenus, ...defaultMenus]
 }
+
+export const footerItems = [
+  {
+    title: 'Help Center',
+    path: '#',
+    icon: openOrder,
+  },
+  {
+    title: 'Log Out',
+    path: '#',
+    icon: openOrder,
+  },
+]

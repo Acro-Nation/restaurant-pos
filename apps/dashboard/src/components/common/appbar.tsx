@@ -1,9 +1,10 @@
 import React from 'react'
-import { Input } from '@/components/ui/input'
+import { Input } from '@/components/atoms/input'
 
 import Image from 'next/image'
 import NotificationIcon from '@/assets/icons/Notification'
 import CartIcon from '@/assets/icons/CartIcon'
+import { Search } from 'lucide-react'
 
 const AppBar = () => {
   return (
@@ -15,14 +16,13 @@ const AppBar = () => {
           className="w-full  text-black bg-[#F5F5F5]" // Add padding to the left
         />
         <span className="absolute inset-y-0 right-3 flex items-center text-gray-500">
-          {/* <Search className="w-5 h-5" /> */}
+          <Search className="w-5 h-5" />
         </span>
       </div>
 
       <div className="flex items-center space-x-4">
         <div className="relative">
           <button className="hover:bg-[#F5F5F5] rounded-full p-2">
-            {/* <Bell className="size-[30px]" /> */}
             <NotificationIcon />
           </button>
           <span className="absolute top-0 right-0 -mt-1 -mr-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white">
@@ -31,7 +31,6 @@ const AppBar = () => {
         </div>
         <div className="relative">
           <button className="hover:bg-[#F5F5F5] rounded-full p-2">
-            {/* <Lock className="size-[30px]" /> */}
             <CartIcon />
           </button>
           <span className="absolute top-0 right-0 -mt-1 -mr-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white">
