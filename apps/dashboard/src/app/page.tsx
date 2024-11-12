@@ -14,9 +14,9 @@ export default function Home() {
       <NewOrderCard />
       <OpenOrderCard />
       <Salestabs />
-      
-      <Button variant={"confirm"}>sign in</Button>
-      <Button variant={"cancel"}>cancel</Button>
+
+      <Button variant={'confirm'}>sign in</Button>
+      <Button variant={'cancel'}>cancel</Button>
     </div>
   )
 }

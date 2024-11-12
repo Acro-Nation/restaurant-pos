@@ -21,7 +21,7 @@ const formSchema = z.object({
   password: z.string().min(8, {
     message: 'Password should have minimum 8 characters',
   }),
-  rememberMe: z.boolean().optional(), 
+  rememberMe: z.boolean().optional(),
 })
 
 export function LoginForm() {
@@ -30,12 +30,12 @@ export function LoginForm() {
     defaultValues: {
       email: '',
       password: '',
-      rememberMe: false, 
+      rememberMe: false,
     },
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values) 
+    console.log(values)
   }
 
   return (
