@@ -56,10 +56,14 @@ export function LoginForm() {
                   Enter your Email <span className="text-red-600">*</span>
                 </FormLabel>
                 <FormControl>
-                    <div className='relative'>
-                        <LoginUserIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500"></LoginUserIcon>
-                  <Input className='pl-10' placeholder="Enter your email" {...field} />
-                    </div>
+                  <div className="relative">
+                    <LoginUserIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500"></LoginUserIcon>
+                    <Input
+                      className="pl-10"
+                      placeholder="Enter your email"
+                      {...field}
+                    />
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -76,14 +80,14 @@ export function LoginForm() {
                   Enter your Password <span className="text-red-600">*</span>
                 </FormLabel>
                 <FormControl>
-                  <div className='relative'>
+                  <div className="relative">
                     <LoginPassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500"></LoginPassIcon>
-                  <Input
-                  className="pl-10" 
-                    type="password"
-                    placeholder="Enter your password"
-                    {...field}
-                  />
+                    <Input
+                      className="pl-10"
+                      type="password"
+                      placeholder="Enter your password"
+                      {...field}
+                    />
                   </div>
                 </FormControl>
                 <FormMessage />
@@ -109,9 +113,13 @@ export function LoginForm() {
             )}
           />
 
-          <div className='flex gap-5'>
-          <Button variant={"confirm"} size={"custom"} type="submit">Submit</Button>
-          <Button variant={"cancel"} size={"custom"} type="submit">Forget Password?</Button>
+          <div className="flex gap-5">
+            <Button variant={'confirm'} size={'custom'} type="submit">
+              Submit
+            </Button>
+            <Button variant={'cancel'} size={'custom'} type="submit">
+              Forget Password?
+            </Button>
           </div>
         </form>
       </Form>
