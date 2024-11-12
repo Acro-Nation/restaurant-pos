@@ -3,6 +3,9 @@ import NewOrderCard from './features/newOrderCard/newOrderCard'
 import OpenOrderCard from './features/openOrder/openOrderCard'
 import Salestabs from './features/sales/salesTabs/salestabs'
 import Notification from '@/components/common/notification/notification'
+import { Button } from '@/components/atoms/button'
+
+
 
 
 export default function Home() {
