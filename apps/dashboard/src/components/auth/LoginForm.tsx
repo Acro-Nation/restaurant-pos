@@ -17,6 +17,7 @@ import { Input } from '@/components/atoms/input'
 import { Checkbox } from '@/components/atoms/checkbox'
 import LoginUserIcon from '@/assets/icons/LoginUser'
 import LoginPassIcon from '@/assets/icons/LoginPass'
+import Link from 'next/link'
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email' }),
@@ -42,7 +43,7 @@ export function LoginForm() {
 
   return (
     <div>
-      <h2 className="font-semibold text-[40px] text-[#181818] my-20">
+      <h2 className="font-semibold text-2xl lg:text-[40px] text-[#181818] my-5 lg:my-20">
         Sign In to your account
       </h2>
       <Form {...forms}>
@@ -117,9 +118,11 @@ export function LoginForm() {
             <Button variant={'confirm'} size={'custom'} type="submit">
               Submit
             </Button>
-            <Button variant={'cancel'} size={'custom'} type="submit">
+            <Link href={'/forgetpassword'}>
+              <Button variant={'cancel'} size={'custom'}>
               Forget Password?
-            </Button>
+              </Button>
+            </Link>
           </div>
         </form>
       </Form>
