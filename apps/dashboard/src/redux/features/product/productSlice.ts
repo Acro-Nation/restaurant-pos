@@ -1,4 +1,5 @@
-import { TProduct } from '@/types/componentType'
+
+import { TProduct } from '@/types/common'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type ProductState = {

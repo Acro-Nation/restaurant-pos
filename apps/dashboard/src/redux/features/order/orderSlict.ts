@@ -1,4 +1,5 @@
-import { TOrderItem } from '@/types/componentType'
+
+import { TOrderItem } from '@/types/common'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type OrderState = {

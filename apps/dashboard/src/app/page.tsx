@@ -5,8 +5,6 @@ import Salestabs from './features/sales/salesTabs/salestabs'
 import Notification from '@/components/common/notification/notification'
 import { Button } from '@/components/atoms/button'
 
-
-
 export default function Home() {
   return (
     <div className="p-6 flex flex-col gap-5 bg-[#F5F5F5]">

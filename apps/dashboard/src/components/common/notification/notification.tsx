@@ -1,6 +1,5 @@
 import NotificationIcon from '@/assets/icons/Notification'
 
-
 const Notification = () => {
   const err = true
   return (

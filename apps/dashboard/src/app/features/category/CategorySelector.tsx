@@ -1,4 +1,4 @@
-import { CategorySelectorProps } from '@/types/componentType'
+import { CategorySelectorProps } from '@/types/common'
 
 const CategorySelector: React.FC<CategorySelectorProps> = ({
   categoryOptions,

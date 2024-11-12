@@ -1,6 +1,7 @@
 import TkIcon from '@/assets/icons/TkIcon'
 import GrowIcon from '@/assets/icons/salesIcon/GrowIcon'
 import ReuseIcon from '@/components/common/reuseIcon/reuseIcon'
+import { SaleInfo } from '@/types/common'
 
 const Salestabs: React.FC<SaleInfo> = ({ logo, title, amount }) => {
   return (
