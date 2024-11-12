@@ -60,14 +60,14 @@ export function VerifyForm() {
                   </h2>
                 </FormLabel>
                 <FormControl>
-                  <InputOTP maxLength={6} {...field} >
-                    <InputOTPGroup className='flex lg:gap-5 gap-2 ml-5'>
+                  <InputOTP maxLength={6} {...field}>
+                    <InputOTPGroup className="flex lg:gap-5 gap-2 ml-5">
                       <InputOTPSlot index={0} />
-                      <InputOTPSlot  index={1} />
-                      <InputOTPSlot  index={2} />
-                      <InputOTPSlot  index={3} />
-                      <InputOTPSlot  index={4} />
-                      <InputOTPSlot  index={5} />
+                      <InputOTPSlot index={1} />
+                      <InputOTPSlot index={2} />
+                      <InputOTPSlot index={3} />
+                      <InputOTPSlot index={4} />
+                      <InputOTPSlot index={5} />
                     </InputOTPGroup>
                   </InputOTP>
                 </FormControl>

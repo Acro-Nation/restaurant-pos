@@ -11,18 +11,24 @@ const page = () => {
     <div className="mb-56">
       <Image
         src={ball}
-        content='fill'
+        content="fill"
         alt="ball"
         className="absolute h-[204px] w-[204px] lg:h-[422px] lg:w-[422px]  lg:-left-4 hidden lg:flex "
       ></Image>
       <Image
         src={ball2}
-        content='fill'
+        content="fill"
         alt="ball"
         className="absolute h-[204px] w-[204px] lg:h-[422px] lg:w-[422px]  lg:hidden  right-0  -top-10 "
       ></Image>
       <div className=" lg:max-w-[1600px] max-w-[335px] mx-auto flex items-center gap-5 relative top-20">
-        <Image src={login} height={100} width={772} alt="login-person" className='hidden md:flex'></Image>
+        <Image
+          src={login}
+          height={100}
+          width={772}
+          alt="login-person"
+          className="hidden md:flex"
+        ></Image>
         <div>
           <Image
             src={logo}

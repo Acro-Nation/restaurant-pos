@@ -120,7 +120,7 @@ export function LoginForm() {
             </Button>
             <Link href={'/forgetpassword'}>
               <Button variant={'cancel'} size={'custom'}>
-              Forget Password?
+                Forget Password?
               </Button>
             </Link>
           </div>

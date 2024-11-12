@@ -7,16 +7,16 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div className='lg:mb-56 mb-36'>
+    <div className="lg:mb-56 mb-36">
       <Image
         src={ball}
-        content='fill'
+        content="fill"
         alt="ball"
         className="absolute h-[204px] w-[204px] lg:h-[422px] lg:w-[422px]  lg:-left-4 hidden lg:flex "
       ></Image>
       <Image
         src={ball2}
-        content='fill'
+        content="fill"
         alt="ball"
         className="absolute h-[204px] w-[204px] lg:h-[422px] lg:w-[422px]    right-0  -top-10 "
       ></Image>
