@@ -3,7 +3,7 @@ import TkIcon from '@/assets/icons/TkIcon'
 import ReuseIcon from '@/components/common/reuseIcon/reuseIcon'
 import { TCategoty } from '@/types/common'
 
-const CategoryCard = ({ title, amount }: TCategoty) => {
+const CategoryCard: React.FC<TCategoty> = ({ title, amount }) => {
   return (
     <div className="max-w-[377px] border p-4 flex flex-col gap-11 rounded-lg bg-white">
       <div className="flex justify-between items-center">
