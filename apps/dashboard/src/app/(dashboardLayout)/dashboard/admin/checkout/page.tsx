@@ -19,7 +19,7 @@ const CheckoutPage = () => {
       >
         <TabContent label="Dine-In">
           <div className="flex flex-col space-y-11">
-            <CheckoutItem />
+            <CheckoutItem dishName="Burger" amount={100} orderType="Dine-In" />
             <CheckoutDetails />
           </div>
         </TabContent>

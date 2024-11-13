@@ -13,7 +13,7 @@ const TableCard = () => {
   return (
     <div
       className={`lg:max-w-[220px] border p-4 flex flex-col gap-11 rounded-lg
-        ${select ? 'bg-primary' : 'bg-white'}`} // Conditionally apply background color
+        ${select ? 'bg-primary' : 'bg-white'}`}
       onClick={handleClick}
     >
       <div className="flex justify-between items-center">

@@ -14,7 +14,7 @@ const NewOrderpage = () => {
         ]}
       />
       <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-4 p-4">
-        <NewOrderCard />
+        <NewOrderCard dishName="Sandwich" amount={100} />
       </div>
     </div>
   )
