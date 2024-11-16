@@ -2,7 +2,7 @@
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../common/prisma/prisma.service'
 import { Subscription as PrismaSubscription } from '@prisma/client'
-import { Subscription } from 'src/common/entities/subscription.entity'
+import { BusinessSubscription } from 'src/common/entities/subscription.entity'
 
 @Injectable()
 export class SubscriptionService {
@@ -16,7 +16,7 @@ export class SubscriptionService {
     billingCycle: PrismaSubscription['billingCycle'],
     costPerMonth: number,
     orderPercentageFee: number,
-  ): Promise<Subscription> {
+  ): Promise<BusinessSubscription> {
     const subscription = await this.prisma.subscription.create({
       data: {
         tenantId,
@@ -29,26 +29,28 @@ export class SubscriptionService {
       },
     })
 
-    return subscription // Ensure you return the correct type
+    return subscription
   }
 
   async updateSubscriptionStatus(
     subscriptionId: string,
     status: PrismaSubscription['status'],
-  ): Promise<Subscription> {
+  ): Promise<BusinessSubscription> {
     return this.prisma.subscription.update({
       where: { id: subscriptionId },
       data: { status },
     })
   }
 
-  async deleteSubscription(subscriptionId: string): Promise<Subscription> {
+  async deleteSubscription(
+    subscriptionId: string,
+  ): Promise<BusinessSubscription> {
     return this.prisma.subscription.delete({
       where: { id: subscriptionId },
     })
   }
 
-  async getSubscriptions(): Promise<Subscription[]> {
+  async getSubscriptions(): Promise<BusinessSubscription[]> {
     return this.prisma.subscription.findMany()
   }
 }

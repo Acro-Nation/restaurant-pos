@@ -26,6 +26,7 @@ import { FilterPasswordInterceptor } from './common/utils/filter-password.interc
 import { EncryptDecryptModule } from './common/encrypt-decrypt/encrypt-decrypt.module'
 import { NotificationModule } from './notification/notification.module'
 import { ProductModule } from './product/product.module'
+import { PubSubModule } from './common/pub-sub/pubsub.module'
 
 @Module({
   imports: [
@@ -42,7 +43,22 @@ import { ProductModule } from './product/product.module'
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-      context: ({ req, res }) => ({ req, res }),
+      context: ({ req, res, connection }) => {
+        if (connection) {
+          return { req: connection.context, res: connection.context }
+        }
+        return { req, res }
+      },
+      subscriptions: {
+        'graphql-ws': {
+          path: '/api/v1/subscriptions',
+          onConnect: (context: any) => {
+            const { connectionParams, extra } = context
+            return true
+          },
+        },
+        'subscriptions-transport-ws': false,
+      },
       path: '/api/v1',
     }),
     AuthModule,
@@ -55,6 +71,7 @@ import { ProductModule } from './product/product.module'
     OrderModule,
     NotificationModule,
     EncryptDecryptModule,
+    PubSubModule,
   ],
   providers: [
     AppService,

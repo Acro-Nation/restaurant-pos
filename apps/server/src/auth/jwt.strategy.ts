@@ -1,5 +1,4 @@
 import { Request } from 'express'
-import { User } from '@prisma/client'
 import { Strategy } from 'passport-jwt'
 import { ConfigService } from '@nestjs/config'
 import { PassportStrategy } from '@nestjs/passport'

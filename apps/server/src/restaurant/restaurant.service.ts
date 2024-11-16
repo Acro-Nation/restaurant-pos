@@ -6,12 +6,10 @@ import {
   CreateOwnerInput,
   CreateRestaurantInput,
 } from './dto/create-restaurant.input'
-import { Restaurant } from 'src/common/entities/restaurant.entity'
 import { UserRole } from '@prisma/client'
 import {
   calculateOffset,
   paginate,
-  PaginatedResult,
   PaginationParams,
 } from 'src/common/utils/pagination.utils'
 import { EncryptResponse } from 'src/common/interfaces/config'

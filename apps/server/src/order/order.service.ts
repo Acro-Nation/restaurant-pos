@@ -3,7 +3,6 @@ import { Injectable, ForbiddenException } from '@nestjs/common'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { NotificationType, OrderStatus, User, UserRole } from '@prisma/client'
 import {
-  PaginatedResult,
   PaginationParams,
   calculateOffset,
   paginate,
@@ -163,6 +162,23 @@ export class OrderService {
     const order = await this.prisma.order.update({
       where: { id: orderId },
       data: { status },
+    })
+
+    // Create notification for order status change
+    const notificationType =
+      status === OrderStatus.COMPLETED
+        ? NotificationType.ORDER_COMPLETED
+        : NotificationType.ORDER_CANCELLED
+
+    await this.notificationService.create({
+      type: notificationType,
+      title:
+        status === OrderStatus.COMPLETED
+          ? NotificationTitle.ORDER_COMPLETED()
+          : NotificationTitle.ORDER_CANCELLED(),
+      message: `Order #${orderId} status changed to ${status}`,
+      tenantId: order.tenantId,
+      orderId: order.id,
     })
 
     const encryptedData = this.encryptDecryptService.encryptData(order)

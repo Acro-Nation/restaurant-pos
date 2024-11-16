@@ -21,3 +21,16 @@ export interface JwtPayload {
   role: string
   tenantId: string
 }
+
+export interface NotificationPayload {
+  notification: {
+    id: string
+    type: string
+    title: string
+    message: string
+    tenantId: string
+    orderId?: string
+    createdAt: Date
+    updatedAt: Date
+  }
+}

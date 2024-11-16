@@ -13,7 +13,7 @@ import { UseGuards } from '@nestjs/common'
 import { GqlAuthGuard } from 'src/common/guards/gql-auth.guard'
 import { RolesGuard } from 'src/common/guards/roles.guard'
 import { Roles } from 'src/auth/roles.decorator'
-import { UserRole } from '@prisma/client'
+import { NotificationType, UserRole } from '@prisma/client'
 import { CreateNotificationInput } from './dto/create-notification.input'
 import { UpdateNotificationInput } from './dto/update-notification.input'
 import { PaginationParams } from 'src/common/utils/pagination.utils'
@@ -117,8 +117,8 @@ export class NotificationResolver {
   }
 
   @Subscription(() => NotificationSubscriptionPayload, {
+    name: 'notificationCreated',
     filter: (payload, variables, context) => {
-      // Filter notifications based on tenantId
       return (
         payload.notificationCreated.notification.tenantId ===
         context.req.user.tenantId
@@ -132,7 +132,28 @@ export class NotificationResolver {
     UserRole.WAITER,
     UserRole.CHEF,
   )
-  notificationCreated() {
+  onNotificationCreated() {
     return this.pubSub.asyncIterator('notificationCreated')
+  }
+
+  @Mutation(() => Boolean)
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  // @Roles(UserRole.WAITER)
+  async testNotification() {
+    const dummyNotification = {
+      id: 'test-' + Date.now(),
+      type: NotificationType.ORDER_CREATED,
+      title: 'Test Notification',
+      message: 'This is a test notification - ' + new Date().toLocaleString(),
+      tenantId: 'test-tenant',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }
+
+    await this.pubSub.publish('notificationCreated', {
+      notificationCreated: { notification: dummyNotification },
+    })
+
+    return true
   }
 }

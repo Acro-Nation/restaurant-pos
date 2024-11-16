@@ -34,14 +34,14 @@ export class AuthResolver {
       httpOnly: true,
       secure: this.configService.get<string>('NODE_ENV') === 'production',
       maxAge: 15 * 60 * 1000, // 15 minutes
-      sameSite: 'none',
+      sameSite: 'strict',
     })
 
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: this.configService.get<string>('NODE_ENV') === 'production',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      sameSite: 'none',
+      sameSite: 'strict',
     })
 
     return {
@@ -55,6 +55,9 @@ export class AuthResolver {
     @Context('res') res: Response,
   ) {
     const refreshToken = req.cookies['refreshToken']
+
+    console.log({ seeCookies: req.cookies })
+    console.log({ refreshToken })
 
     if (!refreshToken) {
       throw new UnauthorizedException('Refresh token is missing')

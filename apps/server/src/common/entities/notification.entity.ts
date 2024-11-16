@@ -32,3 +32,9 @@ export class Notification {
   @Field()
   updatedAt: Date
 }
+
+@ObjectType()
+export class NotificationSubscriptionPayload {
+  @Field(() => Notification)
+  notification: Notification
+}

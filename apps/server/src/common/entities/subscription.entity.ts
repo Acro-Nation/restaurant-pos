@@ -10,8 +10,8 @@ registerEnumType(BillingCycle, {
   name: 'BillingCycle',
 })
 
-@ObjectType()
-export class Subscription {
+@ObjectType('BusinessSubscription')
+export class BusinessSubscription {
   @Field(() => ID)
   id: string
 

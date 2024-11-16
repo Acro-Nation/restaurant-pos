@@ -102,6 +102,10 @@ enum NotificationType {
   NEW_PRODUCT_ADDED
 }
 
+type NotificationSubscriptionPayload {
+  notification: Notification!
+}
+
 type Tenant {
   id: ID!
   name: String!
@@ -109,7 +113,7 @@ type Tenant {
   updatedAt: DateTime!
 }
 
-type Subscription {
+type BusinessSubscription {
   id: ID!
   tenantId: String!
   startDate: DateTime!
@@ -138,7 +142,7 @@ type Query {
   getAllUsers(page: Int! = 1, limit: Int! = 10): EncryptResponse!
   getAllRestaurants(page: Int! = 1, limit: Int! = 10): EncryptResponse!
   getAllTenants: [Tenant!]!
-  getAllSubscriptions: [Subscription!]!
+  getAllSubscriptions: [BusinessSubscription!]!
   getAllProducts(page: Int! = 1, limit: Int! = 10): EncryptResponse!
   getProduct(id: String!): EncryptResponse!
   getAllOrders(page: Int! = 1, limit: Int! = 10): EncryptResponse!
@@ -154,8 +158,8 @@ type Mutation {
   createUser(name: String!, email: String!, password: String!, role: UserRole!): EncryptResponse!
   createRestaurantWithOwner(tenantId: String!, restaurantData: CreateRestaurantInput!, ownerData: CreateOwnerInput!): EncryptResponse!
   createTenant(name: String!): Tenant!
-  updateSubscriptionStatus(subscriptionId: String!, status: SubscriptionStatus!): Subscription!
-  deleteSubscription(subscriptionId: String!): Subscription!
+  updateSubscriptionStatus(subscriptionId: String!, status: SubscriptionStatus!): BusinessSubscription!
+  deleteSubscription(subscriptionId: String!): BusinessSubscription!
   createProduct(createProductInput: CreateProductInput!): EncryptResponse!
   updateProduct(id: String!, updateProductInput: UpdateProductInput!): EncryptResponse!
   removeProduct(id: String!): EncryptResponse!
@@ -164,6 +168,7 @@ type Mutation {
   createNotification(createNotificationInput: CreateNotificationInput!): EncryptResponse!
   updateNotification(id: String!, updateNotificationInput: UpdateNotificationInput!): EncryptResponse!
   removeNotification(id: String!): EncryptResponse!
+  testNotification: Boolean!
 }
 
 input LoginDto {
@@ -230,4 +235,8 @@ input UpdateNotificationInput {
   message: String
   tenantId: String
   orderId: String
+}
+
+type Subscription {
+  notificationCreated: NotificationSubscriptionPayload!
 }
