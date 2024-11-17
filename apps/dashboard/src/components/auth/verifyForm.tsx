@@ -1,36 +1,40 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
 
-import { Button } from '@/components/ui/button'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
-import { InputOTP, InputOTPGroup, InputOTPSlot } from '../ui/input-otp'
+import { Button } from '@/components/atoms/button'
+import { InputOTP, InputOTPGroup, InputOTPSlot } from '../atoms/input-otp'
 
-const formSchema = z.object({
-  email: z.string().email({ message: 'Please enter a valid email' }),
+// Validation Schema
+const validationSchema = Yup.object({
+  otp: Yup.string()
+    .length(6, 'OTP must be 6 digits')
+    .required('OTP is required'),
 })
 
 export function VerifyForm() {
-  const forms = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: '',
+  const {
+    handleBlur,
+    values,
+    errors,
+    handleSubmit,
+    isSubmitting,
+    touched,
+    setFieldValue,
+  } = useFormik({
+    initialValues: {
+      otp: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      console.log(values)
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
+  const handleOTPChange = (e: string) => {
+    setFieldValue('otp', e)
   }
-
   return (
     <div className="lg:text-center max-w-md mx-auto">
       <div className="my-5 lg:my-10">
@@ -47,43 +51,42 @@ export function VerifyForm() {
         </p>
       </div>
 
-      <Form {...forms}>
-        <form onSubmit={forms.handleSubmit(onSubmit)} className="space-y-6">
-          <FormField
-            control={forms.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  <h2 className="font-semibold text-xl lg:text-2xl text-center text-gray-800">
-                    01:05
-                  </h2>
-                </FormLabel>
-                <FormControl>
-                  <InputOTP maxLength={6} {...field}>
-                    <InputOTPGroup className="flex lg:gap-5 gap-2 ml-5">
-                      <InputOTPSlot index={0} />
-                      <InputOTPSlot index={1} />
-                      <InputOTPSlot index={2} />
-                      <InputOTPSlot index={3} />
-                      <InputOTPSlot index={4} />
-                      <InputOTPSlot index={5} />
-                    </InputOTPGroup>
-                  </InputOTP>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <label>
+          <h2 className="font-semibold text-xl lg:text-2xl text-center text-gray-800">
+            01:05
+          </h2>
+        </label>
+        <InputOTP
+          maxLength={6}
+          name="otp"
+          onChange={(e) => {
+            handleOTPChange(e)
+          }}
+          onBlur={handleBlur}
+          {...values}
+        >
+          <InputOTPGroup className="flex lg:gap-5 gap-2 ml-5">
+            <InputOTPSlot index={0} />
+            <InputOTPSlot index={1} />
+            <InputOTPSlot index={2} />
+            <InputOTPSlot index={3} />
+            <InputOTPSlot index={4} />
+            <InputOTPSlot index={5} />
+          </InputOTPGroup>
+        </InputOTP>
 
-          <Button
-            className="w-full bg-teal-600 text-white hover:bg-teal-700"
-            type="submit"
-          >
-            Verify
-          </Button>
-        </form>
-      </Form>
+        {touched.otp && errors.otp && (
+          <p className="text-red-600 text-sm mt-1">{errors.otp}</p>
+        )}
+        <Button
+          className="w-full bg-teal-600 text-white hover:bg-teal-700"
+          type="submit"
+          disabled={isSubmitting}
+        >
+          Verify
+        </Button>
+      </form>
     </div>
   )
 }
