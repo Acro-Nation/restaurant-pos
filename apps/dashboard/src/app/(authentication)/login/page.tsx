@@ -1,6 +1,6 @@
 import React from 'react'
 import { LoginForm } from '@/components/auth/LoginForm'
-import Ball from '@/assets/ball'
+import Ball from '@/assets/Ball'
 import Ball2 from '@/assets/Ball2'
 import Image from 'next/image'
 import logo from '@/assets/Link 1.png'

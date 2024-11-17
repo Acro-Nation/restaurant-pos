@@ -2,7 +2,7 @@ import { VerifyForm } from '@/components/auth/verifyForm'
 import logo from '../../../assets/Link 1.png'
 import Image from 'next/image'
 import React from 'react'
-import Ball from '@/assets/ball'
+import Ball from '@/assets/Ball'
 import Ball2 from '@/assets/Ball2'
 
 const page = () => {

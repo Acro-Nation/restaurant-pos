@@ -4,7 +4,7 @@ import React from 'react'
 import { ForgetPassForm } from '@/components/auth/ForgetPassword'
 import Ball2 from '@/assets/Ball2'
 import Image from 'next/image'
-import Ball from '@/assets/ball'
+import Ball from '@/assets/Ball'
 
 const page = () => {
   return (
