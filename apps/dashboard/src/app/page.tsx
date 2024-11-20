@@ -3,6 +3,7 @@ import Salestabs from './features/sales/salesTabs/salestabs'
 import Notification from '@/components/common/notification/notification'
 import { Button } from '@/components/atoms/button'
 import LineChartComponent from '@/components/molecules/Charts/AreaChart'
+import SalesChart from '@/components/molecules/Charts/BarChart'
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
       <Button variant={'confirm'}>sign in</Button>
       <Button variant={'cancel'}>cancel</Button>
       <LineChartComponent />
+      <SalesChart />
     </div>
   )
 }

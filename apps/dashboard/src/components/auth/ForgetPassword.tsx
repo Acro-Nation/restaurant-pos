@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/atoms/button'
 import {
   Form,
   FormControl,
@@ -12,8 +12,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
+} from '@/components/atoms/form'
+import { Input } from '@/components/atoms/input'
 import LoginUserIcon from '@/assets/icons/LoginUser'
 import Link from 'next/link'
 
