@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/atoms/button'
 import {
   Form,
   FormControl,
@@ -12,8 +12,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
-import { InputOTP, InputOTPGroup, InputOTPSlot } from '../ui/input-otp'
+} from '@/components/atoms/form'
+import { InputOTP, InputOTPGroup, InputOTPSlot } from '../atoms/input-otp'
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email' }),

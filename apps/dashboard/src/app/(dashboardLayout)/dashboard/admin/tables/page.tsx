@@ -50,6 +50,7 @@ const TablePage = () => {
           </div>
         </TabContent>
       </Tabs>
+      
     </>
   )
 }

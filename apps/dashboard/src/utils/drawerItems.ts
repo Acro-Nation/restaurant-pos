@@ -1,13 +1,13 @@
 import { USER_ROLE } from '@/constant/role'
-
 import NewOrderIcon from '../assets/icons/NewOrderIcon'
 import openOrder from '../assets/icons/OpenOrderIcon'
 import CategoryIcon from '../assets/icons/CategoryIcon'
 import TableIcon from '../assets/icons/TableIcon'
-
 import PurchesIcon from '../assets/icons/PurchesIcon'
 import SettingIcon from '../assets/icons/SettingIcon'
-import SaleIcon from '@/assets/icons/SaleIcon'
+import SaleIGroupIcon from '@/assets/icons/SaleIGroupIcon'
+import LogoutIcon from '@/assets/icons/LogoutIcon'
+import HelpCenterIcon from '@/assets/icons/HelpCenterIcon'
 
 export const drawerItems = (role: userRole): DrawerItem[] => {
   const roleMenus: DrawerItem[] = []
@@ -19,7 +19,7 @@ export const drawerItems = (role: userRole): DrawerItem[] => {
     },
   ]
   switch (role) {
-    case USER_ROLE.admin:
+    case USER_ROLE.RESTAURANT_ADMIN:
       roleMenus.push(
         {
           title: 'New Order',
@@ -44,11 +44,11 @@ export const drawerItems = (role: userRole): DrawerItem[] => {
         {
           title: 'Sales',
           path: `${role}/sales`,
-          icon: SaleIcon,
+          icon: SaleIGroupIcon,
         },
         {
           title: 'Purches',
-          path: `${role}/#`,
+          path: `${role}/checkout`,
           icon: PurchesIcon,
         },
         {
@@ -59,7 +59,7 @@ export const drawerItems = (role: userRole): DrawerItem[] => {
       )
       break
 
-    case USER_ROLE.user:
+    case USER_ROLE.SUPER_ADMIN:
       roleMenus.push(
         {
           title: 'Home',
@@ -80,8 +80,7 @@ export const drawerItems = (role: userRole): DrawerItem[] => {
       break
 
     // Add additional roles as needed
-    // case USER_ROLE.MANAGER:
-    //    roleMenus.push(...);
+
 
     default:
       break
@@ -94,11 +93,11 @@ export const footerItems = [
   {
     title: 'Help Center',
     path: '#',
-    icon: openOrder,
+    icon: HelpCenterIcon,
   },
   {
     title: 'Log Out',
     path: '#',
-    icon: openOrder,
+    icon: LogoutIcon,
   },
 ]
