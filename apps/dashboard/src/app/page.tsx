@@ -18,7 +18,7 @@ export default function Home() {
       <Button variant={'confirm'}>sign in</Button>
       <Button variant={'cancel'}>cancel</Button>
       <LineChartComponent />
-      <SalesChart/>
+      <SalesChart />
     </div>
   )
 }

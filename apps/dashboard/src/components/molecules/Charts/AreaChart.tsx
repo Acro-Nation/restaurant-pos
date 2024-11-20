@@ -27,7 +27,7 @@ const data = [
 const LineChartComponent: React.FC = () => {
   return (
     <div className="bg-white rounded-lg p-4 shadow-md">
-       <div className="flex items-center text-[14px] leading-[22px] font-medium text-primary h-[64px] gap-2 ">
+      <div className="flex items-center text-[14px] leading-[22px] font-medium text-primary h-[64px] gap-2 ">
         <GrowIcon />
         <div className="">+2.25% from last weekly</div>
       </div>
