@@ -10,7 +10,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className="w-full">
         <AppBar />
 
-        <div className="bg-[#F5F5F5] h-auto min-h-[100vh]">{children}</div>
+        <div className="bg-[#F5F5F5] w-full h-auto min-h-[100vh]">{children}</div>
       </div>
     </SidebarProvider>
   )
